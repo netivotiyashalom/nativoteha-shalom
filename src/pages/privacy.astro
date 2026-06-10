@@ -1,0 +1,122 @@
+---
+import { getEntry, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const privacyEntry = await getEntry('pages', 'privacy');
+const { Content } = privacyEntry ? await render(privacyEntry) : { Content: null };
+const title = privacyEntry?.data.title ?? 'מדיניות פרטיות';
+const updated = privacyEntry?.data.updated ?? '';
+---
+<BaseLayout title="מדיניות פרטיות" description="מדיניות פרטיות — נתיבותיה שלום">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="/">בית</a> &rsaquo; מדיניות פרטיות
+    </nav>
+
+    <h1>{title}</h1>
+    {updated && <p class="updated">עודכן לאחרונה: {updated}</p>}
+
+    <div class="privacy-content">
+      {Content ? (
+        <div class="cms-prose">
+          <Content />
+        </div>
+      ) : (
+        <>
+          <section>
+            <h2>1. כללי</h2>
+            <p>
+              אתר "נתיבותיה שלום" הוא אתר סטטי ללימוד תורה. פרטיותך חשובה לנו ואנו מתחייבים לשמור עליה.
+              מסמך זה מסביר אילו מידע נאסף, כיצד הוא נשמר ומה הזכויות שלך.
+            </p>
+          </section>
+
+          <section>
+            <h2>2. מידע הנשמר במכשירך (localStorage)</h2>
+            <p>האתר שומר במכשיר שלך (ולא בשרת) את הנתונים הבאים:</p>
+            <ul>
+              <li><strong>משוב שיעורים</strong> — האם לחצת על "השתמשתי בשיעור זה" או "לימוד אישי". נתונים אלה נשמרים רק בדפדפן שלך.</li>
+              <li><strong>העדפות גלישה</strong> — העדפות ממשק שייתכן ונשמרות.</li>
+            </ul>
+            <p>תוכל למחוק נתונים אלה בכל עת דרך הגדרות הדפדפן שלך.</p>
+          </section>
+
+          <section>
+            <h2>3. טפסי יצירת קשר ומשובים</h2>
+            <p>
+              כאשר אתה שולח הודעה דרך טופס יצירת הקשר, ההודעה נשלחת ישירות דרך לקוח האימייל שלך. כאשר אתה לוחץ על כפתורי משוב לשיעורים, ייתכן שנתונים אנונימיים ייאספו דרך Netlify Forms.
+            </p>
+          </section>
+
+          <section>
+            <h2>4. עוגיות (Cookies)</h2>
+            <p>האתר אינו משתמש בעוגיות שיווקיות. פונטים של Google עשויים להיטען משרתי Google בהתאם למדיניות הפרטיות שלהם.</p>
+          </section>
+
+          <section>
+            <h2>5. שירותי צד שלישי</h2>
+            <ul>
+              <li><strong>Google Fonts</strong> — לטעינת הפונטים. כפוף למדיניות Google.</li>
+              <li><strong>Netlify</strong> — אירוח האתר. כפוף למדיניות Netlify.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>6. זכויותיך</h2>
+            <p>
+              מכיוון שהאתר אינו שומר מידע אישי בשרת, אין צורך בבקשת מחיקה. לשאלות — <a href="/contact">צרו קשר</a>.
+            </p>
+          </section>
+
+          <section>
+            <h2>7. שינויים במדיניות</h2>
+            <p>אנו עשויים לעדכן מדיניות זו מעת לעת. העדכון האחרון מצוין בראש הדף.</p>
+          </section>
+        </>
+      )}
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .breadcrumb { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+  .breadcrumb a { color: var(--text-muted); }
+  .breadcrumb a:hover { color: var(--blue); }
+
+  h1 { font-size: 2rem; margin-bottom: 0.3rem; }
+
+  .updated { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 2.5rem; }
+
+  .privacy-content { max-width: 800px; }
+
+  /* Static fallback sections */
+  section {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  section:last-child { border-bottom: none; }
+
+  h2 { font-size: 1.15rem; margin-bottom: 0.7rem; color: var(--blue); }
+
+  p { color: var(--text-muted); line-height: 1.8; margin-bottom: 0.7rem; font-size: 0.95rem; }
+  ul { color: var(--text-muted); padding-right: 1.4rem; font-size: 0.95rem; line-height: 1.9; }
+  li { margin-bottom: 0.3rem; }
+  a { color: var(--blue); }
+  a:hover { color: var(--gold); }
+
+  /* CMS-rendered markdown */
+  .cms-prose :global(h2) {
+    font-size: 1.15rem;
+    color: var(--blue);
+    margin: 2rem 0 0.7rem;
+    padding-bottom: 0.3rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .cms-prose :global(p)  { color: var(--text-muted); line-height: 1.8; margin-bottom: 0.7rem; font-size: 0.95rem; }
+  .cms-prose :global(ul) { color: var(--text-muted); padding-right: 1.4rem; font-size: 0.95rem; line-height: 1.9; margin-bottom: 0.7rem; }
+  .cms-prose :global(li) { margin-bottom: 0.3rem; }
+  .cms-prose :global(strong) { color: var(--blue); }
+  .cms-prose :global(a) { color: var(--blue); }
+  .cms-prose :global(a:hover) { color: var(--gold); }
+</style>

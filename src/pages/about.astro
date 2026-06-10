@@ -1,0 +1,163 @@
+---
+import { getEntry, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CategoryIcon from '../components/CategoryIcon.astro';
+
+const aboutEntry = await getEntry('pages', 'about');
+const { Content } = aboutEntry ? await render(aboutEntry) : { Content: null };
+const title = aboutEntry?.data.title ?? 'אודות נתיבותיה שלום';
+---
+<BaseLayout title="אודות" description="אודות אתר נתיבותיה שלום — דפי מקורות ושיעורי תורה">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="/">בית</a> &rsaquo; אודות
+    </nav>
+
+    <div class="about-hero">
+      <h1>{title}</h1>
+      <p class="lead">
+        "נתיבותיה שלום" הוא אתר המוקדש להכנת שיעורי תורה איכותיים — מקורות מסודרים, ברורים ונגישים, הן למעביר השיעור והן למשתתפים.
+      </p>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-card card">
+        <div class="about-card-icon" style="color: var(--blue); background: rgba(27,46,75,0.08);">
+          <CategoryIcon type="parashiyot" size={36} />
+        </div>
+        <h2>המטרה</h2>
+        <p>
+          להנגיש את לימוד התורה לכל אחד — מי שמעביר שיעור בחברותא, בקהל, בבית ספר, או לומד לעצמו.
+          כל שיעור בנוי בקפידה עם מקורות ראשוניים, פירושים, שאלות לדיון ותמצית.
+        </p>
+      </div>
+
+      <div class="about-card card">
+        <div class="about-card-icon" style="color: #8a6a10; background: rgba(201,168,76,0.15);">
+          <CategoryIcon type="hagim" size={36} />
+        </div>
+        <h2>מבנה הדפים</h2>
+        <p>
+          כל שיעור כולל שני דפים: <strong>דף למעביר</strong> — עם הרחבות, הכוונות ושאלות לדיון; ו<strong>דף למשתתפים</strong> — נקי ומסודר לקריאה בזמן השיעור, מוכן להדפסה.
+        </p>
+      </div>
+
+      <div class="about-card card">
+        <div class="about-card-icon" style="color: var(--blue); background: rgba(27,46,75,0.06);">
+          <CategoryIcon type="nosim" size={36} />
+        </div>
+        <h2>הנושאים</h2>
+        <p>
+          פרשות השבוע לכל ספרי התורה, חגים ומועדי ישראל, ושיעורים בנושאים שונים כגון אמונה, תפילה, חסד, מידות טובות ועוד.
+        </p>
+      </div>
+    </div>
+
+    {Content && (
+      <div class="cms-content prose-about">
+        <Content />
+      </div>
+    )}
+
+    <section class="values-section">
+      <h2 class="section-title">הערכים שלנו</h2>
+      <div class="values-grid">
+        <div class="value-item">
+          <h3>דיוק במקורות</h3>
+          <p>כל ציטוט מדויק, עם מקור מלא. אנו מקפידים על נאמנות לטקסט המקורי.</p>
+        </div>
+        <div class="value-item">
+          <h3>נגישות לכולם</h3>
+          <p>חומר שניתן להשתמש בו ברמות שונות — שיעור ראשוני או עיון מעמיק.</p>
+        </div>
+        <div class="value-item">
+          <h3>רלוונטיות לחיים</h3>
+          <p>חיבור בין המקורות הקדומים לחיי היום יום ולאתגרים של דורנו.</p>
+        </div>
+        <div class="value-item">
+          <h3>שיתוף ותרומה</h3>
+          <p>ברוכים הבאים לשלוח שיעורים, הערות ותוספות — נשמח לשתף פעולה.</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</BaseLayout>
+
+<style>
+  .breadcrumb { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+  .breadcrumb a { color: var(--text-muted); }
+  .breadcrumb a:hover { color: var(--blue); }
+
+  .about-hero {
+    margin-bottom: 2.5rem;
+    max-width: 760px;
+  }
+
+  .about-hero h1 { font-size: 2.2rem; margin-bottom: 0.8rem; }
+
+  .lead {
+    font-size: 1.12rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .about-card { padding: 1.8rem; }
+
+  .about-card-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+
+  .about-card h2 { font-size: 1.15rem; margin-bottom: 0.5rem; }
+  .about-card p { color: var(--text-muted); font-size: 0.93rem; line-height: 1.7; }
+
+  /* CMS-editable content block */
+  .cms-content {
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-right: 4px solid var(--gold);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  .cms-content :global(h2) { font-size: 1.2rem; color: var(--blue); margin: 1.5rem 0 0.6rem; }
+  .cms-content :global(h3) { font-size: 1.05rem; color: var(--blue); margin: 1.2rem 0 0.5rem; }
+  .cms-content :global(p)  { color: var(--text-muted); line-height: 1.8; margin-bottom: 0.7rem; }
+  .cms-content :global(ul), .cms-content :global(ol) { padding-right: 1.4rem; }
+  .cms-content :global(li) { color: var(--text-muted); margin-bottom: 0.3rem; }
+  .cms-content :global(strong) { color: var(--blue); }
+
+  .values-section { margin-bottom: 2.5rem; }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .value-item {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-right: 4px solid var(--gold);
+    border-radius: var(--radius);
+    padding: 1.2rem 1.4rem;
+  }
+
+  .value-item h3 { font-size: 1rem; margin-bottom: 0.4rem; color: var(--blue); }
+  .value-item p { font-size: 0.88rem; color: var(--text-muted); }
+</style>

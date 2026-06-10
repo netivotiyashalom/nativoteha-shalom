@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { parashiyot } from '../../data/parashiyot';
+
+const sfarim = ['בראשית', 'שמות', 'ויקרא', 'במדבר', 'דברים'];
+const bySifer = sfarim.map(s => ({
+  name: s,
+  parashiyot: parashiyot.filter(p => p.sefer === s),
+}));
+---
+<BaseLayout title="פרשות שבוע">
+  <div class="container">
+    <h1 class="page-title">פרשות שבוע</h1>
+    <p class="page-desc">דפי מקורות ושיעורים לכל פרשות השנה</p>
+
+    {bySifer.map(sefer => (
+      <section class="sefer-section">
+        <h2 class="sefer-title">{sefer.name}</h2>
+        <div class="parashiyot-grid">
+          {sefer.parashiyot.map(p => (
+            <a href={`/parashiyot/${p.id}`} class="parasha-item card">
+              <span class="parasha-name">{p.name}</span>
+              <span class="parasha-arrow">&laquo;</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
+</BaseLayout>
+
+<style>
+  .page-title {
+    font-size: 2rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .page-desc {
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+  }
+
+  .sefer-section { margin-bottom: 2.5rem; }
+
+  .sefer-title {
+    font-size: 1.3rem;
+    color: var(--blue);
+    border-right: 4px solid var(--gold);
+    padding-right: 0.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .parashiyot-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 0.7rem;
+  }
+
+  .parasha-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.8rem 1rem;
+    color: var(--blue);
+    font-weight: 500;
+    font-size: 0.95rem;
+  }
+
+  .parasha-item:hover { color: var(--gold); }
+
+  .parasha-arrow {
+    color: var(--gold);
+    font-size: 0.85rem;
+    opacity: 0.7;
+  }
+</style>

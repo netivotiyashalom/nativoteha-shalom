@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(npm install *)",
+      "PowerShell(netlify *)",
+      "PowerShell(Get-Command *)",
+      "Bash(gh auth *)"
+    ]
+  }
+}

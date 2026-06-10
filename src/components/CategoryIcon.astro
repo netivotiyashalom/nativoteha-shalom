@@ -1,0 +1,75 @@
+---
+interface Props {
+  type: 'parashiyot' | 'hagim' | 'nosim';
+  size?: number;
+}
+const { type, size = 48 } = Astro.props;
+---
+
+{type === 'parashiyot' && (
+  <svg width={size} height={size} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <!-- Scroll body -->
+    <rect x="8" y="10" width="32" height="28" rx="2" fill="currentColor" opacity="0.08"/>
+    <rect x="8" y="10" width="32" height="28" rx="2" stroke="currentColor" stroke-width="1.8"/>
+    <!-- Scroll rollers top -->
+    <rect x="5" y="8" width="38" height="5" rx="2.5" fill="currentColor" opacity="0.2"/>
+    <rect x="5" y="8" width="38" height="5" rx="2.5" stroke="currentColor" stroke-width="1.5"/>
+    <!-- Scroll rollers bottom -->
+    <rect x="5" y="35" width="38" height="5" rx="2.5" fill="currentColor" opacity="0.2"/>
+    <rect x="5" y="35" width="38" height="5" rx="2.5" stroke="currentColor" stroke-width="1.5"/>
+    <!-- Text lines -->
+    <line x1="14" y1="18" x2="34" y2="18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="14" y1="23" x2="34" y2="23" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="14" y1="28" x2="28" y2="28" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>
+)}
+
+{type === 'hagim' && (
+  <svg width={size} height={size} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <!-- Base -->
+    <rect x="16" y="42" width="16" height="2.5" rx="1.2" fill="currentColor" opacity="0.7"/>
+    <!-- Stem -->
+    <rect x="22.5" y="34" width="3" height="9" rx="1" fill="currentColor"/>
+    <!-- Horizontal bar -->
+    <rect x="8" y="32" width="32" height="2.5" rx="1.2" fill="currentColor"/>
+    <!-- Center branch + flame -->
+    <line x1="24" y1="32" x2="24" y2="20" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+    <ellipse cx="24" cy="17.5" rx="2" ry="3" fill="currentColor" opacity="0.9"/>
+    <!-- Left branches -->
+    <path d="M20 32 Q18 28 18 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <ellipse cx="18" cy="19.5" rx="1.8" ry="2.8" fill="currentColor" opacity="0.9"/>
+    <path d="M15 32 Q11 28 11 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <ellipse cx="11" cy="19.5" rx="1.8" ry="2.8" fill="currentColor" opacity="0.9"/>
+    <!-- Right branches -->
+    <path d="M28 32 Q30 28 30 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <ellipse cx="30" cy="19.5" rx="1.8" ry="2.8" fill="currentColor" opacity="0.9"/>
+    <path d="M33 32 Q37 28 37 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <ellipse cx="37" cy="19.5" rx="1.8" ry="2.8" fill="currentColor" opacity="0.9"/>
+  </svg>
+)}
+
+{type === 'nosim' && (
+  <svg width={size} height={size} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <!-- Star of David (two triangles) -->
+    <!-- Triangle pointing up -->
+    <polygon
+      points="24,6 38,30 10,30"
+      fill="currentColor"
+      opacity="0.12"
+      stroke="currentColor"
+      stroke-width="1.8"
+      stroke-linejoin="round"
+    />
+    <!-- Triangle pointing down -->
+    <polygon
+      points="24,42 10,18 38,18"
+      fill="currentColor"
+      opacity="0.12"
+      stroke="currentColor"
+      stroke-width="1.8"
+      stroke-linejoin="round"
+    />
+    <!-- Center dot -->
+    <circle cx="24" cy="24" r="3" fill="currentColor" opacity="0.5"/>
+  </svg>
+)}

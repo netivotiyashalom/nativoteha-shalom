@@ -1,0 +1,12 @@
+{
+  "items": [
+    { "id": "emuna",       "name": "אמונה ובטחון"    },
+    { "id": "tefila",      "name": "תפילה"            },
+    { "id": "chesed",      "name": "חסד ואהבת ישראל"  },
+    { "id": "talmud-tora", "name": "תלמוד תורה"       },
+    { "id": "shabat",      "name": "שבת"              },
+    { "id": "mishpacha",   "name": "משפחה וחינוך"     },
+    { "id": "teshuva",     "name": "תשובה"            },
+    { "id": "middot",      "name": "מידות טובות"      }
+  ]
+}

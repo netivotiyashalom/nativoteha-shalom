@@ -1,0 +1,263 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CategoryIcon from '../components/CategoryIcon.astro';
+import { parashiyot, hagim, nosim, getCurrentParasha } from '../data/parashiyot';
+
+const currentParasha = getCurrentParasha();
+---
+<BaseLayout title="עמוד הבית" description="דפי מקורות ושיעורי תורה — נתיבותיה שלום">
+
+  <section class="hero">
+    <div class="hero-inner">
+      <h1>נתיבותיה שלום</h1>
+      <p class="hero-sub">דפי מקורות ושיעורי תורה</p>
+
+      <form class="search-form" action="/search" method="get">
+        <input
+          type="search"
+          name="q"
+          placeholder="חיפוש שיעור, פרשה, נושא..."
+          class="search-input"
+          aria-label="חיפוש"
+        />
+        <button type="submit" class="btn btn-gold">חיפוש</button>
+      </form>
+    </div>
+  </section>
+
+  <div class="container">
+
+    <!-- פרשת שבוע -->
+    <section class="parasha-week">
+      <h2 class="section-title">פרשת השבוע</h2>
+      <div class="parasha-card card">
+        <div class="parasha-card-inner">
+          <div>
+            <span class="badge badge-gold">{currentParasha.sefer}</span>
+            <h3 class="parasha-name">פרשת {currentParasha.name}</h3>
+            <p class="parasha-desc">עיין בדפי המקורות ושיעורים לפרשה</p>
+          </div>
+          <div class="parasha-actions">
+            <a href={`/parashiyot/${currentParasha.id}`} class="btn btn-primary">דפי שיעור לפרשה</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- קטגוריות -->
+    <section class="categories">
+      <h2 class="section-title">קטגוריות</h2>
+      <div class="categories-grid">
+
+        <div class="category-card card">
+          <div class="category-icon category-icon--parashiyot">
+            <CategoryIcon type="parashiyot" size={44} />
+          </div>
+          <h3><a href="/parashiyot">פרשות שבוע</a></h3>
+          <p>דפי מקורות לכל פרשות השנה</p>
+          <div class="category-list">
+            {parashiyot.slice(0, 6).map(p => (
+              <a href={`/parashiyot/${p.id}`} class="category-link">{p.name}</a>
+            ))}
+            <a href="/parashiyot" class="category-link more">כל הפרשות &laquo;</a>
+          </div>
+        </div>
+
+        <div class="category-card card">
+          <div class="category-icon category-icon--hagim">
+            <CategoryIcon type="hagim" size={44} />
+          </div>
+          <h3><a href="/hagim">חגים ומועדים</a></h3>
+          <p>שיעורים ומקורות לחגי ישראל</p>
+          <div class="category-list">
+            {hagim.slice(0, 6).map(h => (
+              <a href={`/hagim/${h.id}`} class="category-link">{h.name}</a>
+            ))}
+            <a href="/hagim" class="category-link more">כל החגים &laquo;</a>
+          </div>
+        </div>
+
+        <div class="category-card card">
+          <div class="category-icon category-icon--nosim">
+            <CategoryIcon type="nosim" size={44} />
+          </div>
+          <h3><a href="/nosim">נושאים שונים</a></h3>
+          <p>שיעורים לפי נושאים בעבודת ה'</p>
+          <div class="category-list">
+            {nosim.map(n => (
+              <a href={`/nosim/${n.id}`} class="category-link">{n.name}</a>
+            ))}
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- הסבר על מבנה השיעור -->
+    <section class="about-section card">
+      <h2>מבנה דפי השיעור</h2>
+      <div class="about-grid">
+        <div class="about-item">
+          <h3>📋 דף למעביר השיעור</h3>
+          <p>מכיל את כל המקורות עם הרחבות, שאלות לדיון, הכוונות למנחה, וציוני זמן מומלצים.</p>
+        </div>
+        <div class="about-item">
+          <h3>👥 דף למשתתפים</h3>
+          <p>מכיל את המקורות עצמם בצורה נקייה ונוחה לקריאה, עם שאלות לדיון.</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</BaseLayout>
+
+<style>
+  .hero {
+    background: linear-gradient(135deg, var(--blue) 0%, #2a4a7a 100%);
+    color: var(--white);
+    padding: 3.5rem 1.5rem;
+    text-align: center;
+  }
+
+  .hero-inner { max-width: 700px; margin: 0 auto; }
+
+  .hero h1 {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: var(--gold);
+    margin-bottom: 0.4rem;
+  }
+
+  .hero-sub {
+    color: rgba(255,255,255,0.8);
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+  }
+
+  .search-form {
+    display: flex;
+    gap: 0.5rem;
+    max-width: 500px;
+    margin: 0 auto;
+    direction: rtl;
+  }
+
+  .search-input {
+    flex: 1;
+    padding: 0.7rem 1rem;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: 4px;
+    background: rgba(255,255,255,0.12);
+    color: var(--white);
+    font-size: 1rem;
+    font-family: inherit;
+    direction: rtl;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  .search-input::placeholder { color: rgba(255,255,255,0.5); }
+  .search-input:focus { border-color: var(--gold); background: rgba(255,255,255,0.18); }
+
+  .parasha-week { margin-bottom: 2.5rem; }
+
+  .parasha-card { padding: 1.8rem; }
+
+  .parasha-card-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .parasha-name {
+    font-size: 1.8rem;
+    margin: 0.4rem 0 0.3rem;
+  }
+
+  .parasha-desc { color: var(--text-muted); }
+
+  .categories { margin-bottom: 2.5rem; }
+
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .category-card { padding: 1.5rem; }
+
+  .category-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.8rem;
+  }
+
+  .category-icon--parashiyot { background: rgba(27,46,75,0.08); color: var(--blue); }
+  .category-icon--hagim { background: rgba(201,168,76,0.15); color: #8a6a10; }
+  .category-icon--nosim { background: rgba(27,46,75,0.06); color: var(--blue); }
+
+  .category-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .category-card > p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+
+  .category-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .category-link {
+    background: #f0ece2;
+    color: var(--blue);
+    padding: 0.25rem 0.65rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    transition: background 0.15s;
+  }
+
+  .category-link:hover { background: var(--gold); color: var(--blue); }
+
+  .category-link.more {
+    background: var(--blue);
+    color: var(--white);
+    font-weight: 600;
+  }
+
+  .category-link.more:hover { background: var(--gold); color: var(--blue); }
+
+  .about-section { padding: 2rem; margin-bottom: 2.5rem; }
+
+  .about-section h2 {
+    font-size: 1.3rem;
+    margin-bottom: 1.2rem;
+    color: var(--blue);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .about-item {
+    background: var(--bg);
+    border-radius: var(--radius);
+    padding: 1.2rem;
+  }
+
+  .about-item h3 { font-size: 1rem; margin-bottom: 0.5rem; }
+  .about-item p { font-size: 0.9rem; color: var(--text-muted); }
+</style>

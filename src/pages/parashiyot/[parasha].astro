@@ -1,0 +1,83 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { parashiyot } from '../../data/parashiyot';
+
+export async function getStaticPaths() {
+  return parashiyot.map(p => ({ params: { parasha: p.id }, props: { parasha: p } }));
+}
+
+const { parasha } = Astro.props;
+
+const all = await getCollection('shiurim');
+// One card per shiur (use meaiver as the canonical entry, mishtatfim is paired)
+const shiurim = all.filter(
+  e => e.data.parasha === parasha.id && e.id.startsWith('meaiver/')
+);
+---
+<BaseLayout title={`פרשת ${parasha.name}`} description={`דפי מקורות ושיעורים לפרשת ${parasha.name}`}>
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="/">בית</a> &rsaquo; <a href="/parashiyot">פרשות שבוע</a> &rsaquo; פרשת {parasha.name}
+    </nav>
+
+    <div class="page-header">
+      <span class="badge badge-gold">{parasha.sefer}</span>
+      <h1>פרשת {parasha.name}</h1>
+    </div>
+
+    {shiurim.length > 0 ? (
+      <section class="shiurim-list">
+        <h2 class="section-title">שיעורים לפרשה</h2>
+        <div class="shiurim-grid">
+          {shiurim.map(entry => {
+            const shiurId = entry.id.replace('meaiver/', '');
+            return (
+              <div class="shiur-card card">
+                <div class="shiur-card-meta">
+                  {entry.data.difficulty && <span class="badge badge-gold">{entry.data.difficulty}</span>}
+                  {entry.data.duration && <span class="duration">{entry.data.duration}</span>}
+                </div>
+                <h3>{entry.data.title}</h3>
+                <p>{entry.data.description}</p>
+                {entry.data.tags && entry.data.tags.length > 0 && (
+                  <div class="shiur-tags">
+                    {entry.data.tags.map(t => <span class="tag">{t}</span>)}
+                  </div>
+                )}
+                <div class="shiur-actions">
+                  <a href={`/shiur/${shiurId}/meaiver`} class="btn btn-primary">דף למעביר</a>
+                  <a href={`/shiur/${shiurId}/mishtatfim`} class="btn btn-gold">דף למשתתפים</a>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+    ) : (
+      <div class="empty-state card">
+        <p>שיעורים לפרשת {parasha.name} יתווספו בקרוב.</p>
+        <p class="empty-sub"><a href="/">חזור לעמוד הבית</a></p>
+      </div>
+    )}
+  </div>
+</BaseLayout>
+
+<style>
+  .breadcrumb { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+  .breadcrumb a { color: var(--text-muted); }
+  .breadcrumb a:hover { color: var(--blue); }
+  .page-header { margin-bottom: 2rem; }
+  .page-header h1 { font-size: 2.2rem; margin-top: 0.4rem; }
+  .shiurim-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.2rem; }
+  .shiur-card { padding: 1.5rem; }
+  .shiur-card-meta { display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.6rem; flex-wrap: wrap; }
+  .duration { font-size: 0.78rem; color: var(--text-muted); }
+  .shiur-card h3 { font-size: 1.15rem; margin-bottom: 0.4rem; }
+  .shiur-card p { color: var(--text-muted); font-size: 0.92rem; margin-bottom: 0.8rem; }
+  .shiur-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-bottom: 1rem; }
+  .tag { background: #f0ece2; color: var(--blue); padding: 0.15rem 0.5rem; border-radius: 20px; font-size: 0.75rem; }
+  .shiur-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .empty-state { padding: 2.5rem; text-align: center; color: var(--text-muted); }
+  .empty-sub { margin-top: 0.5rem; font-size: 0.9rem; }
+</style>

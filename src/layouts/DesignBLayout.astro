@@ -1,0 +1,446 @@
+---
+import MaintenanceOverlay from '../components/MaintenanceOverlay.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const { title = 'נתיבותיה שלום', description = 'דפי מקורות ושיעורי תורה' } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="generator" content={Astro.generator} />
+  <meta name="description" content={description} />
+  <title>{title} | נתיבותיה שלום</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=David+Libre:wght@400;700&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <MaintenanceOverlay />
+  <!-- Top accent bar -->
+  <div class="accent-bar"></div>
+
+  <header class="b-header">
+    <div class="b-header-inner">
+      <a href="/design2" class="b-logo">
+        <div class="b-logo-mark">נ"ש</div>
+        <div class="b-logo-text">
+          <span class="b-logo-name">נתיבותיה שלום</span>
+          <span class="b-logo-sub">דפי מקורות ושיעורי תורה</span>
+        </div>
+      </a>
+
+      <nav class="b-nav">
+        <a href="/parashiyot" class="b-nav-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+          </svg>
+          פרשות
+        </a>
+        <a href="/hagim" class="b-nav-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+          חגים
+        </a>
+        <a href="/nosim" class="b-nav-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+          נושאים
+        </a>
+        <a href="/about" class="b-nav-link">אודות</a>
+        <a href="/contact" class="b-nav-link b-nav-cta">צור קשר</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="b-main">
+    <slot />
+  </main>
+
+  <footer class="b-footer">
+    <div class="b-footer-inner">
+      <div class="b-footer-logo">
+        <span class="b-footer-mark">נ"ש</span>
+        <div>
+          <div class="b-footer-name">נתיבותיה שלום</div>
+          <div class="b-footer-tagline">דפי מקורות ושיעורי תורה</div>
+        </div>
+      </div>
+      <div class="b-footer-links">
+        <div class="b-footer-col">
+          <h4>תוכן</h4>
+          <a href="/parashiyot">פרשות שבוע</a>
+          <a href="/hagim">חגים ומועדים</a>
+          <a href="/nosim">נושאים שונים</a>
+        </div>
+        <div class="b-footer-col">
+          <h4>אתר</h4>
+          <a href="/about">אודות</a>
+          <a href="/contact">צור קשר</a>
+          <a href="/privacy">פרטיות</a>
+        </div>
+        <div class="b-footer-col">
+          <h4>עיצוב</h4>
+          <a href="/">עיצוב א׳</a>
+          <a href="/design2" class="active-design">עיצוב ב׳ (נוכחי)</a>
+        </div>
+      </div>
+      <p class="b-footer-copy">&copy; {new Date().getFullYear()} נתיבותיה שלום</p>
+    </div>
+  </footer>
+</body>
+</html>
+
+<style is:global>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --b-bg: #F8F9FA;
+    --b-surface: #FFFFFF;
+    --b-navy: #0F2240;
+    --b-teal: #1A5F7A;
+    --b-gold: #C9961A;
+    --b-gold-light: #F0B429;
+    --b-text: #1A1A2E;
+    --b-muted: #5A6470;
+    --b-border: #E2E8EF;
+    --b-radius: 12px;
+    --b-shadow-sm: 0 1px 4px rgba(15,34,64,0.06), 0 4px 12px rgba(15,34,64,0.06);
+    --b-shadow-md: 0 4px 8px rgba(15,34,64,0.06), 0 12px 32px rgba(15,34,64,0.1);
+  }
+
+  html { direction: rtl; }
+
+  body {
+    font-family: 'Heebo', Arial, sans-serif;
+    background: var(--b-bg);
+    color: var(--b-text);
+    line-height: 1.7;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  h1, h2, h3, h4, h5 {
+    font-family: 'David Libre', 'Frank Ruhl Libre', serif;
+    color: var(--b-navy);
+    line-height: 1.25;
+  }
+
+  a { color: var(--b-teal); text-decoration: none; }
+  a:hover { color: var(--b-gold); }
+
+  /* ── accent bar ── */
+  .accent-bar {
+    height: 3px;
+    background: linear-gradient(90deg, var(--b-navy) 0%, var(--b-teal) 40%, var(--b-gold-light) 100%);
+  }
+
+  /* ── header ── */
+  .b-header {
+    background: var(--b-surface);
+    border-bottom: 1px solid var(--b-border);
+    padding: 0 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--b-shadow-sm);
+  }
+
+  .b-header-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    gap: 2rem;
+  }
+
+  .b-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+  }
+
+  .b-logo-mark {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--b-navy), var(--b-teal));
+    color: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'David Libre', serif;
+    font-weight: 700;
+    font-size: 1rem;
+    flex-shrink: 0;
+    letter-spacing: 0;
+  }
+
+  .b-logo-name {
+    display: block;
+    font-family: 'David Libre', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--b-navy);
+    line-height: 1.2;
+  }
+
+  .b-logo-sub {
+    display: block;
+    font-size: 0.72rem;
+    color: var(--b-muted);
+    font-weight: 400;
+  }
+
+  .b-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+  }
+
+  .b-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.45rem 0.85rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--b-muted);
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .b-nav-link:hover {
+    background: var(--b-bg);
+    color: var(--b-navy);
+  }
+
+  .b-nav-cta {
+    background: var(--b-navy);
+    color: white !important;
+    margin-right: 0.4rem;
+  }
+
+  .b-nav-cta:hover {
+    background: var(--b-teal) !important;
+    color: white !important;
+  }
+
+  /* ── main ── */
+  .b-main { flex: 1; }
+
+  /* ── containers ── */
+  .b-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2.5rem clamp(1.5rem, 4vw, 4rem);
+  }
+
+  /* ── cards ── */
+  .b-card {
+    background: var(--b-surface);
+    border: 1px solid var(--b-border);
+    border-radius: var(--b-radius);
+    box-shadow: var(--b-shadow-sm);
+    transition: box-shadow 0.2s, transform 0.15s;
+  }
+
+  .b-card:hover {
+    box-shadow: var(--b-shadow-md);
+    transform: translateY(-2px);
+  }
+
+  /* ── buttons ── */
+  .b-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem 1.4rem;
+    border-radius: 8px;
+    font-size: 0.93rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.15s;
+    text-decoration: none;
+    font-family: 'Heebo', sans-serif;
+  }
+
+  .b-btn-navy {
+    background: var(--b-navy);
+    color: white;
+  }
+
+  .b-btn-navy:hover { background: var(--b-teal); color: white; }
+
+  .b-btn-gold {
+    background: var(--b-gold);
+    color: white;
+  }
+
+  .b-btn-gold:hover { background: var(--b-gold-light); color: var(--b-navy); }
+
+  .b-btn-outline {
+    background: transparent;
+    color: var(--b-navy);
+    border: 2px solid var(--b-border);
+  }
+
+  .b-btn-outline:hover { border-color: var(--b-navy); color: var(--b-navy); }
+
+  /* ── badges ── */
+  .b-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.65rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+  }
+
+  .b-badge-navy { background: var(--b-navy); color: white; }
+  .b-badge-gold { background: rgba(201,150,26,0.15); color: var(--b-gold); border: 1px solid rgba(201,150,26,0.3); }
+  .b-badge-teal { background: rgba(26,95,122,0.1); color: var(--b-teal); border: 1px solid rgba(26,95,122,0.2); }
+
+  /* ── section headings ── */
+  .b-section-heading {
+    display: flex;
+    align-items: baseline;
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .b-section-heading h2 {
+    font-size: 1.45rem;
+    font-weight: 700;
+  }
+
+  .b-section-heading .b-view-all {
+    font-size: 0.85rem;
+    color: var(--b-teal);
+    font-weight: 500;
+  }
+
+  .b-divider {
+    height: 1px;
+    background: linear-gradient(90deg, var(--b-gold) 0%, transparent 100%);
+    margin-bottom: 1.5rem;
+    margin-top: -0.5rem;
+    width: 80px;
+  }
+
+  /* ── footer ── */
+  .b-footer {
+    background: var(--b-navy);
+    color: rgba(255,255,255,0.6);
+    padding: 2.5rem 2rem 1.5rem;
+  }
+
+  .b-footer-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .b-footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+
+  .b-footer-mark {
+    width: 44px;
+    height: 44px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'David Libre', serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--b-gold-light);
+    flex-shrink: 0;
+  }
+
+  .b-footer-name {
+    font-family: 'David Libre', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.1rem;
+  }
+
+  .b-footer-tagline { font-size: 0.75rem; color: rgba(255,255,255,0.4); }
+
+  .b-footer-links {
+    display: flex;
+    gap: 3rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .b-footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .b-footer-col h4 {
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+    font-family: 'Heebo', sans-serif;
+    color: var(--b-gold-light);
+    opacity: 0.8;
+  }
+
+  .b-footer-col a {
+    font-size: 0.87rem;
+    color: rgba(255,255,255,0.55);
+    transition: color 0.15s;
+  }
+
+  .b-footer-col a:hover, .b-footer-col a.active-design { color: var(--b-gold-light); }
+
+  .b-footer-copy {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 1rem;
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.3);
+  }
+
+  /* breadcrumb */
+  .b-breadcrumb {
+    font-size: 0.82rem;
+    color: var(--b-muted);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .b-breadcrumb a { color: var(--b-muted); }
+  .b-breadcrumb a:hover { color: var(--b-navy); }
+
+  @media (max-width: 680px) {
+    .b-header-inner { height: auto; padding: 0.8rem 0; flex-direction: column; align-items: flex-start; gap: 0.6rem; }
+    .b-nav { flex-wrap: wrap; gap: 0.15rem; }
+    .b-nav-link { font-size: 0.85rem; padding: 0.35rem 0.7rem; }
+  }
+</style>

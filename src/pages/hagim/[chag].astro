@@ -1,0 +1,65 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { hagim } from '../../data/parashiyot';
+
+export async function getStaticPaths() {
+  return hagim.map(h => ({ params: { chag: h.id }, props: { chag: h } }));
+}
+
+const { chag } = Astro.props;
+const all = await getCollection('shiurim');
+const shiurim = all.filter(e => e.data.chag === chag.id && e.id.startsWith('meaiver/'));
+---
+<BaseLayout title={chag.name} description={`שיעורים ודפי מקורות ל${chag.name}`}>
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="/">בית</a> &rsaquo; <a href="/hagim">חגים ומועדים</a> &rsaquo; {chag.name}
+    </nav>
+    <div class="page-header">
+      <span class="badge badge-blue">חג ומועד</span>
+      <h1>{chag.name}</h1>
+    </div>
+    {shiurim.length > 0 ? (
+      <section>
+        <h2 class="section-title">שיעורים</h2>
+        <div class="shiurim-grid">
+          {shiurim.map(entry => {
+            const shiurId = entry.id.replace('meaiver/', '');
+            return (
+              <div class="shiur-card card">
+                <div class="shiur-card-meta">
+                  {entry.data.difficulty && <span class="badge badge-gold">{entry.data.difficulty}</span>}
+                  {entry.data.duration && <span class="duration">{entry.data.duration}</span>}
+                </div>
+                <h3>{entry.data.title}</h3>
+                <p>{entry.data.description}</p>
+                <div class="shiur-actions">
+                  <a href={`/shiur/${shiurId}/meaiver`} class="btn btn-primary">דף למעביר</a>
+                  <a href={`/shiur/${shiurId}/mishtatfim`} class="btn btn-gold">דף למשתתפים</a>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+    ) : (
+      <div class="empty-state card"><p>שיעורים ל{chag.name} יתווספו בקרוב.</p></div>
+    )}
+  </div>
+</BaseLayout>
+<style>
+  .breadcrumb { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+  .breadcrumb a { color: var(--text-muted); }
+  .breadcrumb a:hover { color: var(--blue); }
+  .page-header { margin-bottom: 2rem; }
+  .page-header h1 { font-size: 2.2rem; margin-top: 0.4rem; }
+  .shiurim-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.2rem; }
+  .shiur-card { padding: 1.5rem; }
+  .shiur-card-meta { display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.6rem; }
+  .duration { font-size: 0.78rem; color: var(--text-muted); }
+  .shiur-card h3 { font-size: 1.15rem; margin-bottom: 0.4rem; }
+  .shiur-card p { color: var(--text-muted); font-size: 0.92rem; margin-bottom: 1.2rem; }
+  .shiur-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .empty-state { padding: 2.5rem; text-align: center; color: var(--text-muted); }
+</style>

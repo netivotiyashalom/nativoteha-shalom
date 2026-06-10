@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { nosim } from '../../data/parashiyot';
+---
+<BaseLayout title="נושאים שונים">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="/">בית</a> &rsaquo; נושאים שונים
+    </nav>
+
+    <h1 class="page-title">נושאים שונים</h1>
+    <p class="page-desc">שיעורים לפי נושאים בעבודת ה' ובחיי היום יום</p>
+
+    <div class="nosim-grid">
+      {nosim.map(n => (
+        <a href={`/nosim/${n.id}`} class="nose-card card">
+          <h2>{n.name}</h2>
+          <span class="card-arrow">&laquo;</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .breadcrumb { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+  .breadcrumb a { color: var(--text-muted); }
+  .breadcrumb a:hover { color: var(--blue); }
+  .page-title { font-size: 2rem; margin-bottom: 0.3rem; }
+  .page-desc { color: var(--text-muted); margin-bottom: 2rem; }
+  .nosim-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
+  .nose-card { display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 1.4rem; color: var(--blue); }
+  .nose-card h2 { font-size: 1.05rem; }
+  .nose-card:hover h2 { color: var(--gold); }
+  .card-arrow { color: var(--gold); font-size: 1rem; }
+</style>

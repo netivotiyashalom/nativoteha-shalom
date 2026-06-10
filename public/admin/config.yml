@@ -1,0 +1,456 @@
+backend:
+  name: git-gateway
+  branch: main
+
+local_backend: true
+
+media_folder: public/uploads
+public_folder: /uploads
+
+# Hebrew locale for field labels
+locale: he
+
+slug:
+  encoding: ascii
+  clean_accents: true
+
+collections:
+
+  # ─────────────────────────────────────────
+  # 1. שיעורים — דף למעביר
+  # ─────────────────────────────────────────
+  - name: shiurim_meaiver
+    label: "שיעורים — למעביר השיעור"
+    label_singular: "שיעור (למעביר)"
+    folder: src/content/shiurim/meaiver
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    summary: "{{title}} | {{fields.difficulty}}"
+    sortable_fields: [title, parasha, chag, nose, difficulty]
+    view_filters:
+      - label: "פרשות שבוע"
+        field: category
+        pattern: parasha
+      - label: "חגים ומועדים"
+        field: category
+        pattern: chag
+      - label: "נושאים"
+        field: category
+        pattern: nose
+    fields:
+      - label: "כותרת השיעור"
+        name: title
+        widget: string
+        hint: "שם השיעור כפי שיוצג באתר"
+
+      - label: "סוג דף"
+        name: type
+        widget: hidden
+        default: meaiver
+
+      - label: "קטגוריה"
+        name: category
+        widget: select
+        options:
+          - { label: "פרשת שבוע", value: parasha }
+          - { label: "חג ומועד",  value: chag    }
+          - { label: "נושא",      value: nose    }
+
+      - label: "פרשה"
+        name: parasha
+        widget: select
+        required: false
+        hint: "מלא רק אם הקטגוריה היא פרשת שבוע"
+        options:
+          - { label: "בראשית",      value: bereshit      }
+          - { label: "נח",          value: noach         }
+          - { label: "לך לך",       value: lech-lecha    }
+          - { label: "וירא",        value: vayera        }
+          - { label: "חיי שרה",     value: chayei-sara   }
+          - { label: "תולדות",      value: toldot        }
+          - { label: "ויצא",        value: vayetze       }
+          - { label: "וישלח",       value: vayishlach    }
+          - { label: "וישב",        value: vayeshev      }
+          - { label: "מקץ",         value: miketz        }
+          - { label: "ויגש",        value: vayigash      }
+          - { label: "ויחי",        value: vayechi       }
+          - { label: "שמות",        value: shemot        }
+          - { label: "וארא",        value: vaera         }
+          - { label: "בא",          value: bo            }
+          - { label: "בשלח",        value: beshalach     }
+          - { label: "יתרו",        value: yitro         }
+          - { label: "משפטים",      value: mishpatim     }
+          - { label: "תרומה",       value: teruma        }
+          - { label: "תצוה",        value: tetzave       }
+          - { label: "כי תשא",      value: ki-tisa       }
+          - { label: "ויקהל",       value: vayakhel      }
+          - { label: "פקודי",       value: pekudei       }
+          - { label: "ויקרא",       value: vayikra       }
+          - { label: "צו",          value: tzav          }
+          - { label: "שמיני",       value: shmini        }
+          - { label: "תזריע",       value: tazria        }
+          - { label: "מצורע",       value: metzora       }
+          - { label: "אחרי מות",    value: acharei-mot   }
+          - { label: "קדושים",      value: kedoshim      }
+          - { label: "אמור",        value: emor          }
+          - { label: "בהר",         value: behar         }
+          - { label: "בחוקותי",     value: bechukotai    }
+          - { label: "במדבר",       value: bamidbar      }
+          - { label: "נשא",         value: nasso         }
+          - { label: "בהעלותך",     value: behaalocha    }
+          - { label: "שלח",         value: shlach        }
+          - { label: "קרח",         value: korach        }
+          - { label: "חוקת",        value: chukat        }
+          - { label: "בלק",         value: balak         }
+          - { label: "פינחס",       value: pinchas       }
+          - { label: "מטות",        value: matot         }
+          - { label: "מסעי",        value: masei         }
+          - { label: "דברים",       value: devarim       }
+          - { label: "ואתחנן",      value: vaetchanan    }
+          - { label: "עקב",         value: ekev          }
+          - { label: "ראה",         value: reeh          }
+          - { label: "שופטים",      value: shoftim       }
+          - { label: "כי תצא",      value: ki-tetze      }
+          - { label: "כי תבוא",     value: ki-tavo       }
+          - { label: "נצבים",       value: nitzavim      }
+          - { label: "וילך",        value: vayelech      }
+          - { label: "האזינו",      value: haazinu       }
+          - { label: "וזאת הברכה",  value: vzot-habracha }
+
+      - label: "חג / מועד"
+        name: chag
+        widget: select
+        required: false
+        hint: "מלא רק אם הקטגוריה היא חג ומועד"
+        options:
+          - { label: "ראש השנה",  value: rosh-hashana }
+          - { label: "יום כיפור", value: yom-kippur   }
+          - { label: "סוכות",     value: sukkot       }
+          - { label: "שמחת תורה", value: simchat-tora }
+          - { label: "חנוכה",     value: chanuka      }
+          - { label: "פורים",     value: purim        }
+          - { label: "פסח",       value: pesach       }
+          - { label: "שבועות",    value: shavuot      }
+          - { label: "תשעה באב",  value: tisha-beav   }
+          - { label: "לג בעומר",  value: lag-baomer   }
+
+      - label: "נושא"
+        name: nose
+        widget: select
+        required: false
+        hint: "מלא רק אם הקטגוריה היא נושא"
+        options:
+          - { label: "אמונה ובטחון",    value: emuna       }
+          - { label: "תפילה",           value: tefila      }
+          - { label: "חסד ואהבת ישראל", value: chesed      }
+          - { label: "תלמוד תורה",      value: talmud-tora }
+          - { label: "שבת",             value: shabat      }
+          - { label: "משפחה וחינוך",    value: mishpacha   }
+          - { label: "תשובה",           value: teshuva     }
+          - { label: "מידות טובות",     value: middot      }
+
+      - label: "תיאור קצר"
+        name: description
+        widget: text
+        hint: "משפט–שניים שיוצגו בדף הרשימה"
+
+      - label: "תגיות"
+        name: tags
+        widget: list
+        required: false
+        field:
+          label: תגית
+          name: tag
+          widget: string
+
+      - label: "משך השיעור"
+        name: duration
+        widget: string
+        required: false
+        hint: "לדוגמה: 45–60 דקות"
+
+      - label: "רמת קושי"
+        name: difficulty
+        widget: select
+        required: false
+        options:
+          - { label: "קל",     value: קל     }
+          - { label: "בינוני", value: בינוני }
+          - { label: "מתקדם",  value: מתקדם  }
+
+      - label: "תוכן הדף (Markdown)"
+        name: body
+        widget: markdown
+        hint: "תוכן מלא של דף המעביר — מקורות, שאלות, הכוונות למנחה"
+
+  # ─────────────────────────────────────────
+  # 2. שיעורים — דף למשתתפים
+  # ─────────────────────────────────────────
+  - name: shiurim_mishtatfim
+    label: "שיעורים — למשתתפים"
+    label_singular: "שיעור (למשתתפים)"
+    folder: src/content/shiurim/mishtatfim
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    summary: "{{title}}"
+    sortable_fields: [title, parasha, chag, nose]
+    view_filters:
+      - label: "פרשות שבוע"
+        field: category
+        pattern: parasha
+      - label: "חגים ומועדים"
+        field: category
+        pattern: chag
+      - label: "נושאים"
+        field: category
+        pattern: nose
+    fields:
+      - label: "כותרת השיעור"
+        name: title
+        widget: string
+        hint: "חייבת להיות זהה לכותרת בדף המעביר"
+
+      - label: "סוג דף"
+        name: type
+        widget: hidden
+        default: mishtatfim
+
+      - label: "קטגוריה"
+        name: category
+        widget: select
+        options:
+          - { label: "פרשת שבוע", value: parasha }
+          - { label: "חג ומועד",  value: chag    }
+          - { label: "נושא",      value: nose    }
+
+      - label: "פרשה"
+        name: parasha
+        widget: select
+        required: false
+        options:
+          - { label: "בראשית",      value: bereshit      }
+          - { label: "נח",          value: noach         }
+          - { label: "לך לך",       value: lech-lecha    }
+          - { label: "וירא",        value: vayera        }
+          - { label: "חיי שרה",     value: chayei-sara   }
+          - { label: "תולדות",      value: toldot        }
+          - { label: "ויצא",        value: vayetze       }
+          - { label: "וישלח",       value: vayishlach    }
+          - { label: "וישב",        value: vayeshev      }
+          - { label: "מקץ",         value: miketz        }
+          - { label: "ויגש",        value: vayigash      }
+          - { label: "ויחי",        value: vayechi       }
+          - { label: "שמות",        value: shemot        }
+          - { label: "וארא",        value: vaera         }
+          - { label: "בא",          value: bo            }
+          - { label: "בשלח",        value: beshalach     }
+          - { label: "יתרו",        value: yitro         }
+          - { label: "משפטים",      value: mishpatim     }
+          - { label: "תרומה",       value: teruma        }
+          - { label: "תצוה",        value: tetzave       }
+          - { label: "כי תשא",      value: ki-tisa       }
+          - { label: "ויקהל",       value: vayakhel      }
+          - { label: "פקודי",       value: pekudei       }
+          - { label: "ויקרא",       value: vayikra       }
+          - { label: "צו",          value: tzav          }
+          - { label: "שמיני",       value: shmini        }
+          - { label: "תזריע",       value: tazria        }
+          - { label: "מצורע",       value: metzora       }
+          - { label: "אחרי מות",    value: acharei-mot   }
+          - { label: "קדושים",      value: kedoshim      }
+          - { label: "אמור",        value: emor          }
+          - { label: "בהר",         value: behar         }
+          - { label: "בחוקותי",     value: bechukotai    }
+          - { label: "במדבר",       value: bamidbar      }
+          - { label: "נשא",         value: nasso         }
+          - { label: "בהעלותך",     value: behaalocha    }
+          - { label: "שלח",         value: shlach        }
+          - { label: "קרח",         value: korach        }
+          - { label: "חוקת",        value: chukat        }
+          - { label: "בלק",         value: balak         }
+          - { label: "פינחס",       value: pinchas       }
+          - { label: "מטות",        value: matot         }
+          - { label: "מסעי",        value: masei         }
+          - { label: "דברים",       value: devarim       }
+          - { label: "ואתחנן",      value: vaetchanan    }
+          - { label: "עקב",         value: ekev          }
+          - { label: "ראה",         value: reeh          }
+          - { label: "שופטים",      value: shoftim       }
+          - { label: "כי תצא",      value: ki-tetze      }
+          - { label: "כי תבוא",     value: ki-tavo       }
+          - { label: "נצבים",       value: nitzavim      }
+          - { label: "וילך",        value: vayelech      }
+          - { label: "האזינו",      value: haazinu       }
+          - { label: "וזאת הברכה",  value: vzot-habracha }
+
+      - label: "חג / מועד"
+        name: chag
+        widget: select
+        required: false
+        options:
+          - { label: "ראש השנה",  value: rosh-hashana }
+          - { label: "יום כיפור", value: yom-kippur   }
+          - { label: "סוכות",     value: sukkot       }
+          - { label: "שמחת תורה", value: simchat-tora }
+          - { label: "חנוכה",     value: chanuka      }
+          - { label: "פורים",     value: purim        }
+          - { label: "פסח",       value: pesach       }
+          - { label: "שבועות",    value: shavuot      }
+          - { label: "תשעה באב",  value: tisha-beav   }
+          - { label: "לג בעומר",  value: lag-baomer   }
+
+      - label: "נושא"
+        name: nose
+        widget: select
+        required: false
+        options:
+          - { label: "אמונה ובטחון",    value: emuna       }
+          - { label: "תפילה",           value: tefila      }
+          - { label: "חסד ואהבת ישראל", value: chesed      }
+          - { label: "תלמוד תורה",      value: talmud-tora }
+          - { label: "שבת",             value: shabat      }
+          - { label: "משפחה וחינוך",    value: mishpacha   }
+          - { label: "תשובה",           value: teshuva     }
+          - { label: "מידות טובות",     value: middot      }
+
+      - label: "תיאור קצר"
+        name: description
+        widget: text
+
+      - label: "תגיות"
+        name: tags
+        widget: list
+        required: false
+        field:
+          label: תגית
+          name: tag
+          widget: string
+
+      - label: "משך השיעור"
+        name: duration
+        widget: string
+        required: false
+
+      - label: "רמת קושי"
+        name: difficulty
+        widget: select
+        required: false
+        options:
+          - { label: "קל",     value: קל     }
+          - { label: "בינוני", value: בינוני }
+          - { label: "מתקדם",  value: מתקדם  }
+
+      - label: "תוכן הדף (Markdown)"
+        name: body
+        widget: markdown
+        hint: "המקורות עצמם — נקיים, מוכנים להדפסה"
+
+  # ─────────────────────────────────────────
+  # 3. קטגוריות
+  # ─────────────────────────────────────────
+  - name: categories
+    label: "קטגוריות"
+    files:
+      - name: parashiyot
+        label: "פרשות השבוע"
+        file: src/data/categories/parashiyot.json
+        fields:
+          - label: "רשימת הפרשות"
+            name: items
+            widget: list
+            summary: "{{fields.name}} ({{fields.sefer}})"
+            fields:
+              - { label: "מזהה (אנגלית)",  name: id,    widget: string }
+              - { label: "שם הפרשה",       name: name,  widget: string }
+              - { label: "שם הספר",        name: sefer, widget: string }
+
+      - name: hagim
+        label: "חגים ומועדים"
+        file: src/data/categories/hagim.json
+        fields:
+          - label: "רשימת החגים"
+            name: items
+            widget: list
+            summary: "{{fields.name}}"
+            fields:
+              - { label: "מזהה (אנגלית)", name: id,   widget: string }
+              - { label: "שם החג",        name: name, widget: string }
+
+      - name: nosim
+        label: "נושאים שונים"
+        file: src/data/categories/nosim.json
+        fields:
+          - label: "רשימת הנושאים"
+            name: items
+            widget: list
+            summary: "{{fields.name}}"
+            fields:
+              - { label: "מזהה (אנגלית)", name: id,   widget: string }
+              - { label: "שם הנושא",      name: name, widget: string }
+
+  # ─────────────────────────────────────────
+  # 4. עמודים
+  # ─────────────────────────────────────────
+  - name: pages
+    label: "עמודים"
+    files:
+      - name: about
+        label: "עמוד אודות"
+        file: src/data/pages/about.md
+        fields:
+          - { label: "כותרת",  name: title, widget: string }
+          - { label: "תוכן",   name: body,  widget: markdown }
+
+      - name: privacy
+        label: "מדיניות פרטיות"
+        file: src/data/pages/privacy.md
+        fields:
+          - { label: "כותרת",       name: title,   widget: string }
+          - { label: "תאריך עדכון", name: updated, widget: string, required: false }
+          - { label: "תוכן",        name: body,     widget: markdown }
+
+  # ─────────────────────────────────────────
+  # 5. הגדרות האתר
+  # ─────────────────────────────────────────
+  - name: settings
+    label: "הגדרות האתר"
+    files:
+      - name: general
+        label: "הגדרות כלליות"
+        file: src/data/settings.json
+        fields:
+          - label: "שם האתר"
+            name: siteName
+            widget: string
+
+          - label: "תיאור האתר"
+            name: tagline
+            widget: string
+
+          - label: "מייל המנהל"
+            name: adminEmail
+            widget: string
+            hint: "כתובת לקבלת תגובות ופניות"
+
+          - label: "מצב תחזוקה"
+            name: maintenanceMode
+            widget: boolean
+            default: false
+            hint: "כאשר פעיל — מבקרים רגילים רואים עמוד 'בבנייה'"
+
+          - label: "צבע ראשי (כחול)"
+            name: colorBlue
+            widget: color
+            default: "#1B2E4B"
+
+          - label: "צבע הדגשה (זהב)"
+            name: colorGold
+            widget: color
+            default: "#C9A84C"
+
+          - label: "צבע רקע"
+            name: colorBg
+            widget: color
+            default: "#f9f7f2"

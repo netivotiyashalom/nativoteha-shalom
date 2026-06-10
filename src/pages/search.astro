@@ -1,0 +1,119 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { parashiyot, hagim, nosim, sampleShiurim } from '../data/parashiyot';
+
+const q = Astro.url.searchParams.get('q')?.trim() ?? '';
+const ql = q.toLowerCase();
+
+const results: Array<{ type: string; title: string; href: string; desc?: string }> = [];
+
+if (q.length >= 2) {
+  parashiyot.filter(p => p.name.includes(q) || p.sefer.includes(q)).forEach(p => {
+    results.push({ type: 'פרשה', title: `פרשת ${p.name}`, href: `/parashiyot/${p.id}`, desc: p.sefer });
+  });
+
+  hagim.filter(h => h.name.includes(q)).forEach(h => {
+    results.push({ type: 'חג', title: h.name, href: `/hagim/${h.id}` });
+  });
+
+  nosim.filter(n => n.name.includes(q)).forEach(n => {
+    results.push({ type: 'נושא', title: n.name, href: `/nosim/${n.id}` });
+  });
+
+  sampleShiurim.filter(s => s.title.includes(q) || s.description.includes(q)).forEach(s => {
+    results.push({ type: 'שיעור', title: s.title, href: `/shiur/${s.id}/mishtatfim`, desc: s.description });
+  });
+}
+---
+<BaseLayout title={q ? `חיפוש: ${q}` : 'חיפוש'}>
+  <div class="container">
+    <h1 class="page-title">חיפוש</h1>
+
+    <form class="search-form" action="/search" method="get">
+      <input
+        type="search"
+        name="q"
+        value={q}
+        placeholder="חיפוש שיעור, פרשה, נושא..."
+        class="search-input"
+        autofocus
+      />
+      <button type="submit" class="btn btn-primary">חיפוש</button>
+    </form>
+
+    {q && (
+      <p class="results-summary">
+        {results.length > 0
+          ? `נמצאו ${results.length} תוצאות עבור "${q}"`
+          : `לא נמצאו תוצאות עבור "${q}"`}
+      </p>
+    )}
+
+    {results.length > 0 && (
+      <div class="results-list">
+        {results.map(r => (
+          <a href={r.href} class="result-item card">
+            <span class="result-type badge badge-blue">{r.type}</span>
+            <div class="result-text">
+              <h3>{r.title}</h3>
+              {r.desc && <p>{r.desc}</p>}
+            </div>
+            <span class="result-arrow">&laquo;</span>
+          </a>
+        ))}
+      </div>
+    )}
+
+    {!q && (
+      <p class="search-hint">הקלידו מילת חיפוש כדי לחפש פרשות, חגים, נושאים ושיעורים.</p>
+    )}
+  </div>
+</BaseLayout>
+
+<style>
+  .page-title { font-size: 2rem; margin-bottom: 1.2rem; }
+
+  .search-form {
+    display: flex;
+    gap: 0.5rem;
+    max-width: 550px;
+    margin-bottom: 1.5rem;
+  }
+
+  .search-input {
+    flex: 1;
+    padding: 0.7rem 1rem;
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: inherit;
+    direction: rtl;
+    outline: none;
+    transition: border-color 0.15s;
+    background: var(--white);
+  }
+
+  .search-input:focus { border-color: var(--blue); }
+
+  .results-summary { color: var(--text-muted); margin-bottom: 1.2rem; }
+
+  .results-list { display: flex; flex-direction: column; gap: 0.8rem; }
+
+  .result-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.2rem;
+    color: var(--text);
+  }
+
+  .result-item:hover { color: var(--blue); }
+
+  .result-text { flex: 1; }
+  .result-text h3 { font-size: 1rem; margin-bottom: 0.2rem; }
+  .result-text p { font-size: 0.85rem; color: var(--text-muted); }
+
+  .result-arrow { color: var(--gold); font-size: 1.1rem; }
+
+  .search-hint { color: var(--text-muted); }
+</style>

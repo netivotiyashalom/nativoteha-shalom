@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { hagim } from '../../data/parashiyot';
+---
+<BaseLayout title="חגים ומועדים">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="/">בית</a> &rsaquo; חגים ומועדים
+    </nav>
+
+    <h1 class="page-title">חגים ומועדים</h1>
+    <p class="page-desc">שיעורים ודפי מקורות לחגי ישראל ומועדיו</p>
+
+    <div class="hagim-grid">
+      {hagim.map(h => (
+        <a href={`/hagim/${h.id}`} class="chag-card card">
+          <h2>{h.name}</h2>
+          <span class="card-arrow">&laquo;</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .breadcrumb { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+  .breadcrumb a { color: var(--text-muted); }
+  .breadcrumb a:hover { color: var(--blue); }
+
+  .page-title { font-size: 2rem; margin-bottom: 0.3rem; }
+  .page-desc { color: var(--text-muted); margin-bottom: 2rem; }
+
+  .hagim-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .chag-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 1.4rem;
+    color: var(--blue);
+  }
+
+  .chag-card h2 { font-size: 1.1rem; }
+
+  .chag-card:hover h2 { color: var(--gold); }
+
+  .card-arrow { color: var(--gold); font-size: 1rem; }
+</style>

@@ -1,0 +1,520 @@
+---
+import DesignBLayout from '../layouts/DesignBLayout.astro';
+import CategoryIcon from '../components/CategoryIcon.astro';
+import { parashiyot, hagim, nosim, getCurrentParasha } from '../data/parashiyot';
+
+const currentParasha = getCurrentParasha();
+---
+<DesignBLayout title="עמוד הבית — עיצוב ב׳" description="דפי מקורות ושיעורי תורה — נתיבותיה שלום">
+
+  <!-- Hero -->
+  <section class="b-hero">
+    <div class="b-hero-bg">
+      <!-- Decorative geometry -->
+      <div class="b-geo b-geo-1"></div>
+      <div class="b-geo b-geo-2"></div>
+      <div class="b-geo b-geo-3"></div>
+    </div>
+    <div class="b-hero-content">
+      <div class="b-hero-text">
+        <div class="b-hero-eyebrow">
+          <span class="b-badge b-badge-gold">פרשת השבוע</span>
+          <span class="b-parasha-current">פרשת {currentParasha.name} — {currentParasha.sefer}</span>
+        </div>
+        <h1 class="b-hero-title">
+          נתיבותיה שלום
+        </h1>
+        <p class="b-hero-desc">
+          דפי מקורות ושיעורי תורה — מוכנים להגשה, עם דף למעביר ודף למשתתפים לכל שיעור.
+        </p>
+        <div class="b-hero-actions">
+          <a href={`/parashiyot/${currentParasha.id}`} class="b-btn b-btn-gold">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+            </svg>
+            שיעורים לפרשת {currentParasha.name}
+          </a>
+          <a href="/parashiyot" class="b-btn b-btn-outline">כל הפרשות</a>
+        </div>
+      </div>
+
+      <form class="b-search-form" action="/search" method="get">
+        <div class="b-search-inner">
+          <svg class="b-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input
+            type="search"
+            name="q"
+            placeholder="חיפוש פרשה, חג, נושא..."
+            class="b-search-input"
+            aria-label="חיפוש"
+          />
+          <button type="submit" class="b-search-submit b-btn b-btn-navy">חיפוש</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <div class="b-container">
+
+    <!-- Parasha week banner -->
+    <section class="b-parasha-banner b-card">
+      <div class="b-parasha-banner-inner">
+        <div class="b-parasha-label">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+          פרשת השבוע
+        </div>
+        <div class="b-parasha-info">
+          <span class="b-badge b-badge-teal">{currentParasha.sefer}</span>
+          <h2 class="b-parasha-name">פרשת {currentParasha.name}</h2>
+        </div>
+        <div class="b-parasha-links">
+          <a href={`/parashiyot/${currentParasha.id}`} class="b-btn b-btn-navy">דפי שיעור לפרשה</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="b-categories-section">
+      <div class="b-section-heading">
+        <h2>קטגוריות</h2>
+        <div style="flex:1; height:1px; background: var(--b-border); margin: 0 1rem; align-self: center;"></div>
+      </div>
+
+      <div class="b-categories-grid">
+
+        <a href="/parashiyot" class="b-cat-card b-card">
+          <div class="b-cat-icon b-cat-icon--scroll">
+            <CategoryIcon type="parashiyot" size={38} />
+          </div>
+          <div class="b-cat-body">
+            <h3>פרשות שבוע</h3>
+            <p>דפי מקורות לכל 54 פרשות התורה</p>
+            <div class="b-cat-tags">
+              {parashiyot.slice(0, 4).map(p => (
+                <span class="b-tag">{p.name}</span>
+              ))}
+              <span class="b-tag b-tag-more">+{parashiyot.length - 4}</span>
+            </div>
+          </div>
+          <div class="b-cat-arrow">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+              <polyline points="15 18 9 12 15 6"/>
+            </svg>
+          </div>
+        </a>
+
+        <a href="/hagim" class="b-cat-card b-card">
+          <div class="b-cat-icon b-cat-icon--menorah">
+            <CategoryIcon type="hagim" size={38} />
+          </div>
+          <div class="b-cat-body">
+            <h3>חגים ומועדים</h3>
+            <p>שיעורים לחגי ישראל ומועדיו</p>
+            <div class="b-cat-tags">
+              {hagim.slice(0, 4).map(h => (
+                <span class="b-tag">{h.name}</span>
+              ))}
+              <span class="b-tag b-tag-more">+{hagim.length - 4}</span>
+            </div>
+          </div>
+          <div class="b-cat-arrow">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+              <polyline points="15 18 9 12 15 6"/>
+            </svg>
+          </div>
+        </a>
+
+        <a href="/nosim" class="b-cat-card b-card">
+          <div class="b-cat-icon b-cat-icon--star">
+            <CategoryIcon type="nosim" size={38} />
+          </div>
+          <div class="b-cat-body">
+            <h3>נושאים שונים</h3>
+            <p>שיעורים לפי נושאים בעבודת ה'</p>
+            <div class="b-cat-tags">
+              {nosim.slice(0, 4).map(n => (
+                <span class="b-tag">{n.name}</span>
+              ))}
+              <span class="b-tag b-tag-more">+{nosim.length - 4}</span>
+            </div>
+          </div>
+          <div class="b-cat-arrow">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+              <polyline points="15 18 9 12 15 6"/>
+            </svg>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="b-how-section">
+      <div class="b-section-heading">
+        <h2>איך זה עובד?</h2>
+        <div style="flex:1; height:1px; background: var(--b-border); margin: 0 1rem; align-self: center;"></div>
+      </div>
+
+      <div class="b-steps-grid">
+        <div class="b-step">
+          <div class="b-step-num">01</div>
+          <h3>בחר נושא</h3>
+          <p>בחר פרשה, חג או נושא שמעניין אותך מהמאגר המלא.</p>
+        </div>
+        <div class="b-step-arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--b-border)" stroke-width="2" aria-hidden="true">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+        </div>
+        <div class="b-step">
+          <div class="b-step-num">02</div>
+          <h3>בחר דף</h3>
+          <p>דף למעביר עם הרחבות, או דף למשתתפים נקי וברור.</p>
+        </div>
+        <div class="b-step-arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--b-border)" stroke-width="2" aria-hidden="true">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+        </div>
+        <div class="b-step">
+          <div class="b-step-num">03</div>
+          <h3>הדפס ולמד</h3>
+          <p>הדפס את הדף ישירות מהדפדפן, מוכן לשיעור.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Design switcher -->
+    <div class="b-design-switch b-card">
+      <div>
+        <h3>משווים עיצובים</h3>
+        <p>זהו עיצוב ב׳ — מודרני ומינימליסטי. ניתן לעבור לעיצוב א׳ הקלאסי.</p>
+      </div>
+      <a href="/" class="b-btn b-btn-outline">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M3 12h18M3 6h18M3 18h18"/>
+        </svg>
+        עיצוב א׳ — קלאסי
+      </a>
+    </div>
+
+  </div>
+</DesignBLayout>
+
+<style>
+  /* ── Hero ── */
+  .b-hero {
+    background: linear-gradient(160deg, var(--b-navy) 0%, #163050 55%, #0a3d52 100%);
+    color: white;
+    padding: 4rem 2rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .b-hero-bg { position: absolute; inset: 0; pointer-events: none; }
+
+  .b-geo {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.06;
+    background: white;
+  }
+
+  .b-geo-1 { width: 500px; height: 500px; top: -200px; left: -100px; }
+  .b-geo-2 { width: 300px; height: 300px; bottom: -100px; right: 10%; background: var(--b-gold-light); opacity: 0.08; }
+  .b-geo-3 { width: 150px; height: 150px; top: 30%; right: 30%; opacity: 0.04; }
+
+  .b-hero-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 3rem;
+    align-items: center;
+    position: relative;
+  }
+
+  .b-hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin-bottom: 1rem;
+  }
+
+  .b-parasha-current {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .b-hero-title {
+    font-family: 'David Libre', serif;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    color: white;
+    margin-bottom: 1rem;
+    line-height: 1.1;
+  }
+
+  .b-hero-desc {
+    color: rgba(255,255,255,0.75);
+    font-size: 1.05rem;
+    margin-bottom: 1.8rem;
+    max-width: 520px;
+    line-height: 1.7;
+  }
+
+  .b-hero-actions {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+  }
+
+  .b-hero-actions .b-btn-outline {
+    border-color: rgba(255,255,255,0.3);
+    color: rgba(255,255,255,0.8);
+  }
+
+  .b-hero-actions .b-btn-outline:hover {
+    border-color: white;
+    color: white;
+    background: rgba(255,255,255,0.08);
+  }
+
+  /* Search */
+  .b-search-form {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 16px;
+    padding: 1.5rem;
+    backdrop-filter: blur(8px);
+  }
+
+  .b-search-inner {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: white;
+    border-radius: 10px;
+    padding: 0.2rem 0.6rem;
+  }
+
+  .b-search-icon { color: var(--b-muted); flex-shrink: 0; }
+
+  .b-search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-family: inherit;
+    font-size: 0.97rem;
+    padding: 0.6rem 0.4rem;
+    direction: rtl;
+    background: transparent;
+    color: var(--b-text);
+  }
+
+  .b-search-input::placeholder { color: var(--b-muted); }
+
+  .b-search-submit {
+    flex-shrink: 0;
+    font-size: 0.88rem;
+    padding: 0.45rem 1rem;
+  }
+
+  /* Parasha banner */
+  .b-parasha-banner {
+    margin-bottom: 2.5rem;
+    overflow: hidden;
+  }
+
+  .b-parasha-banner-inner {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 1.4rem 2rem;
+    flex-wrap: wrap;
+  }
+
+  .b-parasha-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--b-muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-left: 1px solid var(--b-border);
+    padding-left: 2rem;
+    min-width: 120px;
+  }
+
+  .b-parasha-info { flex: 1; }
+  .b-parasha-info .b-badge { margin-bottom: 0.4rem; }
+
+  .b-parasha-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    color: var(--b-navy);
+  }
+
+  /* Categories grid */
+  .b-categories-section { margin-bottom: 3rem; }
+
+  .b-categories-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+  }
+
+  .b-cat-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.6rem;
+    color: var(--b-text);
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .b-cat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--b-border);
+    transition: background 0.2s;
+  }
+
+  .b-cat-card:hover::before { background: var(--b-gold); }
+
+  .b-cat-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .b-cat-icon--scroll { background: rgba(15,34,64,0.06); color: var(--b-navy); }
+  .b-cat-icon--menorah { background: rgba(201,150,26,0.12); color: #8a6010; }
+  .b-cat-icon--star { background: rgba(26,95,122,0.08); color: var(--b-teal); }
+
+  .b-cat-body { flex: 1; }
+
+  .b-cat-body h3 {
+    font-size: 1.05rem;
+    margin-bottom: 0.3rem;
+    color: var(--b-navy);
+    transition: color 0.15s;
+  }
+
+  .b-cat-card:hover .b-cat-body h3 { color: var(--b-gold); }
+
+  .b-cat-body p {
+    font-size: 0.85rem;
+    color: var(--b-muted);
+    margin-bottom: 0.8rem;
+  }
+
+  .b-cat-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+  }
+
+  .b-tag {
+    background: var(--b-bg);
+    border: 1px solid var(--b-border);
+    color: var(--b-muted);
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+  }
+
+  .b-tag-more {
+    background: var(--b-navy);
+    border-color: var(--b-navy);
+    color: white;
+    font-weight: 600;
+  }
+
+  .b-cat-arrow {
+    color: var(--b-border);
+    flex-shrink: 0;
+    transition: color 0.15s;
+  }
+
+  .b-cat-card:hover .b-cat-arrow { color: var(--b-gold); }
+
+  /* Steps */
+  .b-how-section { margin-bottom: 3rem; }
+
+  .b-steps-grid {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .b-step {
+    flex: 1;
+    min-width: 180px;
+    background: var(--b-surface);
+    border: 1px solid var(--b-border);
+    border-radius: var(--b-radius);
+    padding: 1.5rem;
+  }
+
+  .b-step-num {
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: 'David Libre', serif;
+    color: var(--b-border);
+    line-height: 1;
+    margin-bottom: 0.7rem;
+  }
+
+  .b-step h3 {
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+    color: var(--b-navy);
+  }
+
+  .b-step p { font-size: 0.85rem; color: var(--b-muted); }
+
+  .b-step-arrow { flex-shrink: 0; }
+
+  /* Design switch */
+  .b-design-switch {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1.4rem 1.8rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    background: linear-gradient(135deg, rgba(15,34,64,0.03), rgba(26,95,122,0.03));
+    border: 1px dashed var(--b-border);
+  }
+
+  .b-design-switch h3 { font-size: 1rem; margin-bottom: 0.25rem; color: var(--b-navy); }
+  .b-design-switch p { font-size: 0.85rem; color: var(--b-muted); }
+
+  @media (max-width: 1000px) {
+    .b-hero-content { grid-template-columns: 1fr; }
+    .b-categories-grid { grid-template-columns: 1fr; }
+    .b-parasha-label { border-left: none; padding-left: 0; border-top: 1px solid var(--b-border); padding-top: 0.8rem; }
+  }
+
+  @media (max-width: 640px) {
+    .b-hero { padding: 2.5rem 1rem 2rem; }
+  }
+</style>

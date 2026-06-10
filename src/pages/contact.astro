@@ -1,0 +1,245 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// כתובת המייל של המנהל — שנה כאן
+const ADMIN_EMAIL = 'netivotiyashalom@gmail.com';
+---
+<BaseLayout title="צור קשר" description="צרו קשר עם נתיבותיה שלום">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="/">בית</a> &rsaquo; צור קשר
+    </nav>
+
+    <div class="page-header">
+      <h1>צור קשר</h1>
+      <p class="lead">שאלות, הצעות, שיתוף שיעורים או כל דבר אחר — שמחים לשמוע.</p>
+    </div>
+
+    <div class="contact-layout">
+      <div class="contact-form-wrap card">
+        <h2>שלח הודעה</h2>
+
+        <form class="contact-form" id="contactForm" data-email={ADMIN_EMAIL} novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="contact-name">שם <span class="optional-note">(אופציונלי — ניתן לשלוח אנונימי)</span></label>
+              <input type="text" id="contact-name" name="name" placeholder="השאר ריק לשליחה אנונימית" />
+            </div>
+            <div class="form-group">
+              <label for="contact-email-from">כתובת מייל שלך</label>
+              <input type="email" id="contact-email-from" name="from_email" placeholder="לתגובה חזרה (רשות)" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="contact-msg">ההודעה *</label>
+            <textarea
+              id="contact-msg"
+              name="message"
+              rows="6"
+              required
+              placeholder="כתוב את ההודעה כאן..."
+              maxlength="2000"
+            ></textarea>
+            <span class="char-count" id="charCount">0 / 2000</span>
+          </div>
+
+          <div class="form-note">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            ההודעה תישלח ישירות למייל של המנהל. לא תפורסם באתר.
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-send">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+            </svg>
+            שלח הודעה
+          </button>
+        </form>
+
+        <div class="contact-success" id="contactSuccess" hidden>
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/><polyline points="20 6 9 17 4 12"/>
+          </svg>
+          <h3>ההודעה נשלחה!</h3>
+          <p>Gmail נפתח עם ההודעה המוכנה. לחץ שלח ב-Gmail כדי להשלים את השליחה.</p>
+          <a href="/" class="btn btn-primary" style="margin-top:1rem">חזור לעמוד הבית</a>
+        </div>
+      </div>
+
+      <aside class="contact-sidebar">
+        <div class="sidebar-card card">
+          <h3>קישורים שימושיים</h3>
+          <ul class="sidebar-links">
+            <li><a href="/parashiyot">פרשות השבוע</a></li>
+            <li><a href="/hagim">חגים ומועדים</a></li>
+            <li><a href="/nosim">נושאים שונים</a></li>
+            <li><a href="/about">אודות האתר</a></li>
+          </ul>
+        </div>
+
+      </aside>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .breadcrumb { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+  .breadcrumb a { color: var(--text-muted); }
+  .breadcrumb a:hover { color: var(--blue); }
+
+  .page-header { margin-bottom: 2rem; }
+  .page-header h1 { font-size: 2.2rem; margin-bottom: 0.4rem; }
+  .lead { color: var(--text-muted); font-size: 1.05rem; }
+
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .contact-form-wrap { padding: 2rem; }
+  .contact-form-wrap h2 { font-size: 1.3rem; margin-bottom: 1.5rem; }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1.1rem;
+    position: relative;
+  }
+
+  label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .optional-note {
+    font-weight: 400;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+  }
+
+  input, select, textarea {
+    padding: 0.65rem 0.9rem;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    direction: rtl;
+    background: var(--white);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(27,46,75,0.07);
+  }
+
+  textarea { resize: vertical; }
+
+  .char-count {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-align: left;
+    margin-top: 0.2rem;
+  }
+
+  .form-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-bottom: 1.2rem;
+    background: var(--bg);
+    padding: 0.6rem 0.8rem;
+    border-radius: 6px;
+  }
+
+  .btn-send {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    padding: 0.7rem 1.8rem;
+  }
+
+  .contact-success {
+    text-align: center;
+    padding: 2rem;
+    color: #2d7a3a;
+  }
+
+  .contact-success svg { color: #2d7a3a; margin-bottom: 0.8rem; }
+  .contact-success h3 { color: #2d7a3a; font-size: 1.3rem; margin-bottom: 0.5rem; }
+  .contact-success p { color: var(--text-muted); font-size: 0.93rem; }
+
+  .contact-sidebar { display: flex; flex-direction: column; gap: 1.2rem; }
+
+  .sidebar-card { padding: 1.3rem 1.4rem; }
+  .sidebar-card h3 { font-size: 0.98rem; margin-bottom: 0.6rem; }
+  .sidebar-card p { font-size: 0.85rem; color: var(--text-muted); }
+
+  .sidebar-links { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+  .sidebar-links a { font-size: 0.9rem; color: var(--blue); }
+  .sidebar-links a:hover { color: var(--gold); }
+  .sidebar-links a::before { content: '← '; color: var(--gold); font-size: 0.8rem; }
+
+  @media (max-width: 860px) {
+    .contact-layout { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .contact-sidebar { flex-direction: row; flex-wrap: wrap; }
+    .sidebar-card { flex: 1; min-width: 200px; }
+  }
+</style>
+
+<script>
+  const form = document.getElementById('contactForm') as HTMLFormElement | null;
+  const successDiv = document.getElementById('contactSuccess');
+  const textarea = document.getElementById('contact-msg') as HTMLTextAreaElement | null;
+  const charCount = document.getElementById('charCount');
+
+  textarea?.addEventListener('input', () => {
+    if (charCount) charCount.textContent = `${textarea.value.length} / 2000`;
+  });
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const data = new FormData(form);
+    const name = (data.get('name') as string)?.trim();
+    const fromEmail = (data.get('from_email') as string)?.trim();
+    const message = (data.get('message') as string)?.trim();
+    const adminEmail = form.dataset.email ?? '';
+
+    if (!message) {
+      alert('אנא כתוב הודעה לפני השליחה');
+      return;
+    }
+
+    const mailSubject = encodeURIComponent('[נתיבותיה שלום] הודעה חדשה');
+    const mailBody = encodeURIComponent(
+      (name ? `שם השולח: ${name}\n` : 'שולח: אנונימי\n') +
+      (fromEmail ? `מייל חזרה: ${fromEmail}\n` : '') +
+      `\nהודעה:\n${message}`
+    );
+
+    window.open(`mailto:${adminEmail}?subject=${mailSubject}&body=${mailBody}`, '_blank');
+
+    form.hidden = true;
+    if (successDiv) successDiv.hidden = false;
+  });
+</script>

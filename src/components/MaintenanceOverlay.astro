@@ -1,0 +1,268 @@
+---
+// No props needed - all logic is client-side
+---
+
+<div id="maintenance-overlay" aria-modal="true" role="dialog" aria-label="האתר בבנייה">
+  <div class="mo-bg">
+    <div class="mo-shape mo-shape-1"></div>
+    <div class="mo-shape mo-shape-2"></div>
+    <div class="mo-shape mo-shape-3"></div>
+  </div>
+
+  <div class="mo-content">
+    <!-- Logo / brand -->
+    <div class="mo-logo">
+      <div class="mo-logo-mark">נ״ש</div>
+      <div class="mo-logo-text">
+        <span class="mo-logo-name">נתיבותיה שלום</span>
+        <span class="mo-logo-sub">דפי מקורות ושיעורי תורה</span>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="mo-divider"></div>
+
+    <!-- Headline -->
+    <div class="mo-icon" aria-hidden="true">
+      <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Gear / construction icon -->
+        <circle cx="32" cy="32" r="10" stroke="currentColor" stroke-width="2.5"/>
+        <path d="M32 14v4M32 46v4M14 32h4M46 32h4
+                 M19.5 19.5l2.8 2.8M41.7 41.7l2.8 2.8
+                 M44.5 19.5l-2.8 2.8M22.3 41.7l-2.8 2.8"
+              stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <h1 class="mo-title">האתר בשלבי בנייה</h1>
+
+    <p class="mo-desc">
+      אנחנו עובדים על משהו מיוחד.<br/>
+      <strong>נתיבותיה שלום</strong> — דפי מקורות ושיעורי תורה — יחזור בקרוב.
+    </p>
+
+    <div class="mo-pasuk">
+      <p>״דְּרָכֶיהָ דַרְכֵי נֹעַם, וְכָל נְתִיבוֹתֶיהָ שָׁלוֹם״</p>
+      <span>משלי ג׳, י״ז</span>
+    </div>
+
+    <div class="mo-status">
+      <span class="mo-dot"></span>
+      בנייה פעילה
+    </div>
+  </div>
+</div>
+
+<style>
+  #maintenance-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: var(--blue, #1B2E4B);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    direction: rtl;
+    font-family: 'Heebo', Arial, sans-serif;
+  }
+
+  /* Background shapes */
+  .mo-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .mo-shape {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.05;
+    background: white;
+  }
+
+  .mo-shape-1 { width: 600px; height: 600px; top: -200px; right: -150px; }
+  .mo-shape-2 { width: 350px; height: 350px; bottom: -100px; left: -80px; background: var(--gold, #C9A84C); opacity: 0.07; }
+  .mo-shape-3 { width: 180px; height: 180px; top: 40%; left: 40%; opacity: 0.03; }
+
+  /* Content card */
+  .mo-content {
+    position: relative;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: clamp(2rem, 5vw, 3.5rem) clamp(2rem, 6vw, 4.5rem);
+    max-width: 560px;
+    width: 100%;
+    text-align: center;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.35);
+  }
+
+  /* Logo */
+  .mo-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 1.8rem;
+  }
+
+  .mo-logo-mark {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, var(--gold, #C9A84C), #e8c96a);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--blue, #1B2E4B);
+    flex-shrink: 0;
+    letter-spacing: 0;
+  }
+
+  .mo-logo-text {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    gap: 0.1rem;
+  }
+
+  .mo-logo-name {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--gold, #C9A84C);
+    line-height: 1.2;
+  }
+
+  .mo-logo-sub {
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 400;
+  }
+
+  /* Divider */
+  .mo-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.5), transparent);
+    margin-bottom: 1.8rem;
+  }
+
+  /* Icon */
+  .mo-icon {
+    color: var(--gold, #C9A84C);
+    margin-bottom: 1.2rem;
+    display: flex;
+    justify-content: center;
+    animation: spin-slow 12s linear infinite;
+  }
+
+  @keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+
+  /* Title */
+  .mo-title {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.9rem;
+  }
+
+  /* Description */
+  .mo-desc {
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 1rem;
+    line-height: 1.75;
+    margin-bottom: 1.8rem;
+  }
+
+  .mo-desc strong { color: var(--gold, #C9A84C); }
+
+  /* Pasuk */
+  .mo-pasuk {
+    background: rgba(201, 168, 76, 0.08);
+    border: 1px solid rgba(201, 168, 76, 0.2);
+    border-radius: 10px;
+    padding: 1rem 1.4rem;
+    margin-bottom: 1.8rem;
+  }
+
+  .mo-pasuk p {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 0.35rem;
+    line-height: 1.6;
+  }
+
+  .mo-pasuk span {
+    font-size: 0.78rem;
+    color: var(--gold, #C9A84C);
+    opacity: 0.8;
+  }
+
+  /* Status pill */
+  .mo-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px;
+    padding: 0.35rem 1rem;
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .mo-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #4ade80;
+    animation: pulse 2s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.5; transform: scale(0.85); }
+  }
+</style>
+
+<script>
+  (function () {
+    const overlay = document.getElementById('maintenance-overlay');
+    if (!overlay) return;
+
+    const isAdminPath = window.location.pathname.startsWith('/admin');
+    const hasInviteToken = window.location.hash.includes('invite_token=');
+    if (isAdminPath || hasInviteToken) {
+      overlay.style.display = 'none';
+      return;
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const hasPreviewParam = params.get('preview') === 'true';
+
+    if (hasPreviewParam) {
+      sessionStorage.setItem('ns_preview', 'true');
+    }
+
+    const isPreview = sessionStorage.getItem('ns_preview') === 'true';
+
+    if (isPreview) {
+      overlay.style.display = 'none';
+      document.body.style.overflow = '';
+    } else {
+      document.body.style.overflow = 'hidden';
+    }
+  })();
+</script>

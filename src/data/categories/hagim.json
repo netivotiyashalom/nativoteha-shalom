@@ -1,0 +1,14 @@
+{
+  "items": [
+    { "id": "rosh-hashana", "name": "ראש השנה"  },
+    { "id": "yom-kippur",   "name": "יום כיפור" },
+    { "id": "sukkot",       "name": "סוכות"      },
+    { "id": "simchat-tora", "name": "שמחת תורה" },
+    { "id": "chanuka",      "name": "חנוכה"      },
+    { "id": "purim",        "name": "פורים"      },
+    { "id": "pesach",       "name": "פסח"        },
+    { "id": "shavuot",      "name": "שבועות"     },
+    { "id": "tisha-beav",   "name": "תשעה באב"  },
+    { "id": "lag-baomer",   "name": "לג בעומר"  }
+  ]
+}
