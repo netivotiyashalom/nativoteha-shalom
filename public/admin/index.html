@@ -5,23 +5,351 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex" />
   <title>ניהול — נתיבותיה שלום</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <style>
-    body { font-family: 'Heebo', sans-serif; direction: rtl; }
+    /* ══════════════════════════════════════════
+       Base
+    ══════════════════════════════════════════ */
+    *, *::before, *::after {
+      font-family: 'Heebo', sans-serif !important;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      direction: rtl;
+      background: #f0ece3;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* ══════════════════════════════════════════
+       Custom logo injected by JS
+    ══════════════════════════════════════════ */
+    #cms-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 20px;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #C9A84C;
+      white-space: nowrap;
+      letter-spacing: 0.3px;
+      text-decoration: none;
+      order: -1;
+      flex-shrink: 0;
+    }
+
+    #cms-logo::before {
+      content: '✦';
+      font-size: 0.85rem;
+    }
+
+    /* ══════════════════════════════════════════
+       Header
+    ══════════════════════════════════════════ */
+    #nc-root header {
+      background: #1B2E4B !important;
+      direction: rtl !important;
+    }
+
+    #nc-root header > div,
+    #nc-root header > nav {
+      direction: rtl !important;
+      display: flex !important;
+      flex-direction: row !important;
+      justify-content: flex-start !important;
+    }
+
+    /* Hide the default CMS logo text/link */
+    #nc-root header a[href="/"],
+    #nc-root header [class*="AppHeaderTitle"],
+    #nc-root header [class*="BrandTitle"] {
+      display: none !important;
+    }
+
+    #nc-root header a,
+    #nc-root header button,
+    #nc-root header span {
+      color: #e8dfc8 !important;
+    }
+
+    #nc-root header button:hover {
+      color: #C9A84C !important;
+      background: rgba(201,168,76,0.12) !important;
+    }
+
+    /* Quick add / new entry button in header */
+    #nc-root header [class*="Quick"],
+    #nc-root header [class*="AppHeader"] [class*="Button"] {
+      border-color: rgba(201,168,76,0.4) !important;
+      color: #C9A84C !important;
+      border-radius: 6px !important;
+    }
+
+    /* ══════════════════════════════════════════
+       Sidebar / Nav
+    ══════════════════════════════════════════ */
+    #nc-root nav,
+    #nc-root [class*="Sidebar"],
+    #nc-root [class*="sidebar"] {
+      background: #faf7f2 !important;
+      border-left: none !important;
+      border-right: none !important;
+      border-inline-end: 3px solid #C9A84C !important;
+      direction: rtl !important;
+      min-width: 220px !important;
+      max-width: 260px !important;
+      flex-shrink: 0 !important;
+    }
+
+    #nc-root nav a,
+    #nc-root nav button,
+    #nc-root nav span,
+    #nc-root nav li {
+      direction: rtl !important;
+      text-align: right !important;
+    }
+
+    /* Collection group headings */
+    #nc-root nav h2,
+    #nc-root nav h3,
+    #nc-root nav [class*="Heading"],
+    #nc-root nav [class*="heading"] {
+      color: #8a7a5e !important;
+      font-size: 0.7rem !important;
+      font-weight: 700 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 1.2px !important;
+      padding: 16px 16px 4px !important;
+    }
+
+    /* Nav links */
+    #nc-root nav a {
+      color: #1B2E4B !important;
+      border-radius: 6px !important;
+      margin: 2px 8px !important;
+      padding: 8px 12px !important;
+      font-weight: 500 !important;
+      transition: background 0.15s ease !important;
+    }
+
+    #nc-root nav a:hover {
+      background: rgba(201,168,76,0.15) !important;
+      color: #1B2E4B !important;
+    }
+
+    /* Active link */
+    #nc-root nav a[class*="active"],
+    #nc-root nav [class*="active"] > a,
+    #nc-root nav li[class*="active"] a {
+      background: rgba(27,46,75,0.08) !important;
+      color: #1B2E4B !important;
+      font-weight: 700 !important;
+      border-right: 3px solid #C9A84C !important;
+      border-radius: 0 6px 6px 0 !important;
+    }
+
+    /* ══════════════════════════════════════════
+       Main content area
+    ══════════════════════════════════════════ */
+    #nc-root main,
+    #nc-root [class*="MainView"],
+    #nc-root [class*="mainView"] {
+      direction: rtl !important;
+      background: #f5f1ea !important;
+    }
+
+    /* ══════════════════════════════════════════
+       Entry cards / collection list
+    ══════════════════════════════════════════ */
+    #nc-root [class*="EntryCard"],
+    #nc-root [class*="Card"],
+    #nc-root [class*="card"] {
+      border-radius: 10px !important;
+      box-shadow: 0 2px 8px rgba(27,46,75,0.07) !important;
+      border: 1px solid rgba(201,168,76,0.25) !important;
+      background: #fff !important;
+      transition: box-shadow 0.2s ease, border-color 0.2s ease !important;
+      direction: rtl !important;
+      text-align: right !important;
+    }
+
+    #nc-root [class*="EntryCard"]:hover,
+    #nc-root [class*="Card"]:hover {
+      box-shadow: 0 6px 20px rgba(27,46,75,0.13) !important;
+      border-color: #C9A84C !important;
+    }
+
+    /* ══════════════════════════════════════════
+       Editor toolbar
+    ══════════════════════════════════════════ */
+    #nc-root [class*="EditorToolbar"],
+    #nc-root [class*="Toolbar"] {
+      background: #fff !important;
+      border-bottom: 2px solid rgba(201,168,76,0.4) !important;
+      direction: rtl !important;
+    }
+
+    /* Publish / Save button */
+    #nc-root [class*="Toolbar"] button[class*="success"],
+    #nc-root [class*="Toolbar"] button[class*="Publish"],
+    #nc-root [class*="publish"] {
+      background: #1B2E4B !important;
+      color: #fff !important;
+      border-radius: 6px !important;
+      font-weight: 700 !important;
+      border: none !important;
+    }
+
+    #nc-root [class*="Toolbar"] button[class*="success"]:hover {
+      background: #C9A84C !important;
+      color: #1B2E4B !important;
+    }
+
+    /* ══════════════════════════════════════════
+       Buttons — global
+    ══════════════════════════════════════════ */
+    #nc-root button[class*="primary"],
+    #nc-root [class*="Button"][class*="primary"],
+    #nc-root [class*="button"][class*="primary"] {
+      background: #1B2E4B !important;
+      color: #fff !important;
+      border-radius: 6px !important;
+      border: none !important;
+      font-weight: 600 !important;
+    }
+
+    #nc-root button[class*="primary"]:hover {
+      background: #243d63 !important;
+    }
+
+    #nc-root button[class*="secondary"],
+    #nc-root [class*="Button"][class*="secondary"] {
+      border: 2px solid #1B2E4B !important;
+      color: #1B2E4B !important;
+      border-radius: 6px !important;
+      background: transparent !important;
+      font-weight: 600 !important;
+    }
+
+    /* ══════════════════════════════════════════
+       Form fields
+    ══════════════════════════════════════════ */
+    #nc-root label,
+    #nc-root [class*="FieldLabel"],
+    #nc-root [class*="label"] {
+      color: #1B2E4B !important;
+      font-weight: 600 !important;
+      direction: rtl !important;
+      text-align: right !important;
+      display: block !important;
+    }
+
+    #nc-root [class*="FieldHint"],
+    #nc-root [class*="hint"] {
+      color: #8a7a5e !important;
+      font-size: 0.8rem !important;
+      direction: rtl !important;
+      text-align: right !important;
+    }
+
+    #nc-root input[type="text"],
+    #nc-root input[type="email"],
+    #nc-root input[type="search"],
+    #nc-root input[type="url"],
+    #nc-root textarea,
+    #nc-root select {
+      direction: rtl !important;
+      text-align: right !important;
+      border-radius: 6px !important;
+      border: 1.5px solid #d6cfc3 !important;
+      background: #fff !important;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+    }
+
+    #nc-root input:focus,
+    #nc-root textarea:focus,
+    #nc-root select:focus {
+      border-color: #C9A84C !important;
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.18) !important;
+      outline: none !important;
+    }
+
+    /* ══════════════════════════════════════════
+       Login / Auth page
+    ══════════════════════════════════════════ */
+    #nc-root [class*="AuthenticationPage"],
+    #nc-root [class*="Login"] {
+      background: linear-gradient(150deg, #1B2E4B 0%, #2a4570 100%) !important;
+    }
+
+    #nc-root [class*="AuthenticationPage"] h1,
+    #nc-root [class*="Login"] h1 {
+      color: #C9A84C !important;
+      font-weight: 800 !important;
+    }
+
+    #nc-root [class*="AuthenticationPage"] button,
+    #nc-root [class*="Login"] button {
+      background: #C9A84C !important;
+      color: #1B2E4B !important;
+      font-weight: 700 !important;
+      border-radius: 8px !important;
+      border: none !important;
+    }
+
+    /* ══════════════════════════════════════════
+       Markdown editor
+    ══════════════════════════════════════════ */
+    #nc-root [class*="MarkdownControlEle"],
+    #nc-root [class*="RawEditor"],
+    #nc-root .EasyMDEContainer textarea,
+    #nc-root [class*="CodeMirror"] {
+      direction: rtl !important;
+      text-align: right !important;
+    }
+
+    /* ══════════════════════════════════════════
+       Toasts / notifications
+    ══════════════════════════════════════════ */
+    #nc-root [class*="Toast"][class*="success"],
+    #nc-root [class*="Notification"][class*="success"] {
+      background: #1B2E4B !important;
+      border-left: 4px solid #C9A84C !important;
+    }
   </style>
 </head>
 <body>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
   <script>
+    /* ─── Netlify Identity ─── */
     if (window.netlifyIdentity) {
-      window.netlifyIdentity.on("init", user => {
+      window.netlifyIdentity.on('init', user => {
         if (!user) {
-          window.netlifyIdentity.on("login", () => {
-            document.location.href = "/admin/";
+          window.netlifyIdentity.on('login', () => {
+            document.location.href = '/admin/';
           });
         }
       });
     }
+
+    /* ─── Inject custom logo into header ─── */
+    function injectLogo() {
+      const header = document.querySelector('#nc-root header');
+      if (!header || document.getElementById('cms-logo')) return;
+
+      const logo = document.createElement('div');
+      logo.id = 'cms-logo';
+      logo.setAttribute('aria-label', 'נתיבותיה שלום — ניהול');
+      logo.textContent = 'נתיבותיה שלום';
+      header.prepend(logo);
+    }
+
+    const observer = new MutationObserver(injectLogo);
+    observer.observe(document.body, { childList: true, subtree: true });
   </script>
 </body>
 </html>
