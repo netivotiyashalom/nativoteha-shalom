@@ -90,19 +90,65 @@
     }
 
     /* ══════════════════════════════════════════
+       LAYOUT — two-column, no overlap
+    ══════════════════════════════════════════ */
+
+    html, body, #nc-root {
+      height: 100% !important;
+      overflow: hidden !important;
+    }
+
+    /* App root: full-height flex column */
+    #nc-root > div {
+      display: flex !important;
+      flex-direction: column !important;
+      height: 100vh !important;
+      overflow: hidden !important;
+    }
+
+    /* Body area below header: flex row */
+    #nc-root > div > div:not(header) {
+      display: flex !important;
+      flex-direction: row !important;
+      flex: 1 1 auto !important;
+      min-height: 0 !important;
+      overflow: hidden !important;
+    }
+
+    /* Main content: fills remaining width, scrollable */
+    #nc-root > div > div > div:not(nav),
+    #nc-root main,
+    #nc-root [class*="MainView"],
+    #nc-root [class*="mainView"],
+    #nc-root [class*="CollectionView"],
+    #nc-root [class*="WorkflowView"] {
+      flex: 1 1 auto !important;
+      min-width: 0 !important;
+      height: 100% !important;
+      overflow-y: auto !important;
+    }
+
+    /* ══════════════════════════════════════════
        Sidebar / Nav
     ══════════════════════════════════════════ */
     #nc-root nav,
     #nc-root [class*="Sidebar"],
     #nc-root [class*="sidebar"] {
+      /* Override any fixed/absolute positioning */
+      position: relative !important;
+      /* Fixed column width */
+      width: 240px !important;
+      min-width: 240px !important;
+      max-width: 240px !important;
+      flex-shrink: 0 !important;
+      height: 100% !important;
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
       background: #faf7f2 !important;
       border-left: none !important;
       border-right: none !important;
       border-inline-end: 3px solid #C9A84C !important;
       direction: rtl !important;
-      min-width: 220px !important;
-      max-width: 260px !important;
-      flex-shrink: 0 !important;
     }
 
     #nc-root nav a,
@@ -340,7 +386,6 @@
     function injectLogo() {
       const header = document.querySelector('#nc-root header');
       if (!header || document.getElementById('cms-logo')) return;
-
       const logo = document.createElement('div');
       logo.id = 'cms-logo';
       logo.setAttribute('aria-label', 'נתיבותיה שלום — ניהול');
@@ -348,7 +393,55 @@
       header.prepend(logo);
     }
 
-    const observer = new MutationObserver(injectLogo);
+    /* ─── Fix layout: sidebar + main as two separate columns ─── */
+    function fixLayout() {
+      const rootDiv = document.querySelector('#nc-root > div');
+      if (!rootDiv) return;
+
+      const nav = rootDiv.querySelector('nav');
+      if (!nav) return;
+
+      // The container that holds nav + main content
+      const bodyContainer = nav.parentElement;
+      if (!bodyContainer) return;
+
+      // Force body container to flex-row
+      Object.assign(bodyContainer.style, {
+        display:       'flex',
+        flexDirection: 'row',
+        flex:          '1 1 auto',
+        minHeight:     '0',
+        overflow:      'hidden',
+        height:        '100%',
+      });
+
+      // Sidebar — fixed width, no overlap
+      Object.assign(nav.style, {
+        position:   'relative',
+        flexShrink: '0',
+        width:      '240px',
+        minWidth:   '240px',
+        height:     '100%',
+        overflowY:  'auto',
+        overflowX:  'hidden',
+      });
+
+      // Main content siblings — fill remaining space
+      Array.from(bodyContainer.children).forEach(el => {
+        if (el === nav) return;
+        Object.assign(el.style, {
+          flex:      '1 1 auto',
+          minWidth:  '0',
+          height:    '100%',
+          overflowY: 'auto',
+        });
+      });
+    }
+
+    const observer = new MutationObserver(() => {
+      injectLogo();
+      fixLayout();
+    });
     observer.observe(document.body, { childList: true, subtree: true });
   </script>
 </body>
