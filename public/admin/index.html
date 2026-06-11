@@ -90,45 +90,6 @@
     }
 
     /* ══════════════════════════════════════════
-       LAYOUT — two-column, no overlap
-    ══════════════════════════════════════════ */
-
-    html, body, #nc-root {
-      height: 100% !important;
-      overflow: hidden !important;
-    }
-
-    /* App root: full-height flex column */
-    #nc-root > div {
-      display: flex !important;
-      flex-direction: column !important;
-      height: 100vh !important;
-      overflow: hidden !important;
-    }
-
-    /* Body area below header: flex row */
-    #nc-root > div > div:not(header) {
-      display: flex !important;
-      flex-direction: row !important;
-      flex: 1 1 auto !important;
-      min-height: 0 !important;
-      overflow: hidden !important;
-    }
-
-    /* Main content: fills remaining width, scrollable */
-    #nc-root > div > div > div:not(nav),
-    #nc-root main,
-    #nc-root [class*="MainView"],
-    #nc-root [class*="mainView"],
-    #nc-root [class*="CollectionView"],
-    #nc-root [class*="WorkflowView"] {
-      flex: 1 1 auto !important;
-      min-width: 0 !important;
-      height: 100% !important;
-      overflow-y: auto !important;
-    }
-
-    /* ══════════════════════════════════════════
        Sidebar / Nav
     ══════════════════════════════════════════ */
     #nc-root nav,
