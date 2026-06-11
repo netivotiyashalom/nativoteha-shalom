@@ -25,34 +25,60 @@
     }
 
     /* ══════════════════════════════════════════
-       Custom logo injected by JS
+       Logo מוזרק ע"י JS
     ══════════════════════════════════════════ */
     #cms-logo {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 0 20px;
-      font-size: 1.15rem;
-      font-weight: 800;
-      color: #C9A84C;
-      white-space: nowrap;
-      letter-spacing: 0.3px;
-      text-decoration: none;
+      gap: 14px;
+      padding: 0 28px 0 20px;
       order: -1;
       flex-shrink: 0;
+      border-inline-end: 1px solid rgba(201,168,76,0.3);
+      height: 100%;
     }
 
-    #cms-logo::before {
-      content: '✦';
-      font-size: 0.85rem;
+    .cms-logo-icon {
+      font-size: 2rem;
+      color: #C9A84C;
+      line-height: 1;
+      text-shadow: 0 0 20px rgba(201,168,76,0.45);
+    }
+
+    .cms-logo-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .cms-logo-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #f0e4b8;
+      letter-spacing: 0.4px;
+      line-height: 1.2;
+    }
+
+    .cms-logo-subtitle {
+      font-size: 0.62rem;
+      color: rgba(201,168,76,0.7);
+      font-weight: 500;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
     }
 
     /* ══════════════════════════════════════════
        Header
     ══════════════════════════════════════════ */
     #nc-root header {
-      background: #1B2E4B !important;
-      direction: rtl !important;
+      background: linear-gradient(120deg, #152540 0%, #1B2E4B 55%, #243d63 100%) !important;
+      min-height: 72px !important;
+      padding: 0 !important;
+      display: flex !important;
+      align-items: center !important;
+      box-shadow: 0 3px 18px rgba(0,0,0,0.32) !important;
+      flex-shrink: 0 !important;
+      border-bottom: 2px solid rgba(201,168,76,0.4) !important;
     }
 
     #nc-root header > div,
@@ -60,10 +86,14 @@
       direction: rtl !important;
       display: flex !important;
       flex-direction: row !important;
-      justify-content: flex-start !important;
+      align-items: center !important;
+      width: 100% !important;
+      height: 72px !important;
+      padding: 0 12px 0 20px !important;
+      gap: 4px !important;
     }
 
-    /* Hide the default CMS logo text/link */
+    /* Hide default CMS logo */
     #nc-root header a[href="/"],
     #nc-root header [class*="AppHeaderTitle"],
     #nc-root header [class*="BrandTitle"] {
@@ -76,31 +106,47 @@
       color: #e8dfc8 !important;
     }
 
-    #nc-root header button:hover {
-      color: #C9A84C !important;
-      background: rgba(201,168,76,0.12) !important;
+    /* Header nav buttons — taller, styled */
+    #nc-root header button,
+    #nc-root header [class*="Button"] {
+      height: 40px !important;
+      padding: 0 18px !important;
+      border-radius: 8px !important;
+      font-size: 0.875rem !important;
+      font-weight: 600 !important;
+      transition: all 0.18s ease !important;
     }
 
-    /* Quick add / new entry button in header */
+    #nc-root header button:hover {
+      color: #C9A84C !important;
+      background: rgba(201,168,76,0.14) !important;
+    }
+
+    /* "New entry" / Quick-add button */
     #nc-root header [class*="Quick"],
     #nc-root header [class*="AppHeader"] [class*="Button"] {
-      border-color: rgba(201,168,76,0.4) !important;
+      border: 1.5px solid rgba(201,168,76,0.55) !important;
       color: #C9A84C !important;
-      border-radius: 6px !important;
+      border-radius: 8px !important;
+      background: rgba(201,168,76,0.1) !important;
+    }
+
+    #nc-root header [class*="Quick"]:hover,
+    #nc-root header [class*="AppHeader"] [class*="Button"]:hover {
+      background: rgba(201,168,76,0.22) !important;
+      border-color: #C9A84C !important;
     }
 
     /* ══════════════════════════════════════════
-       Sidebar / Nav
+       Sidebar / Nav  (ימין — חיפוש + קטגוריות)
     ══════════════════════════════════════════ */
     #nc-root nav,
     #nc-root [class*="Sidebar"],
     #nc-root [class*="sidebar"] {
-      /* Override any fixed/absolute positioning */
       position: relative !important;
-      /* Fixed column width */
-      width: 240px !important;
-      min-width: 240px !important;
-      max-width: 240px !important;
+      width: 280px !important;
+      min-width: 280px !important;
+      max-width: 280px !important;
       flex-shrink: 0 !important;
       height: 100% !important;
       overflow-y: auto !important;
@@ -109,6 +155,21 @@
       border-left: none !important;
       border-right: none !important;
       border-inline-end: 3px solid #C9A84C !important;
+      direction: rtl !important;
+      padding-top: 6px !important;
+    }
+
+    /* Search box */
+    #nc-root nav input[type="search"],
+    #nc-root nav input[type="text"],
+    #nc-root [class*="SearchInput"] {
+      margin: 10px 12px 6px !important;
+      width: calc(100% - 24px) !important;
+      background: #fff !important;
+      border: 1.5px solid #d6cfc3 !important;
+      border-radius: 8px !important;
+      padding: 9px 12px !important;
+      font-size: 0.9rem !important;
       direction: rtl !important;
     }
 
@@ -120,31 +181,36 @@
       text-align: right !important;
     }
 
-    /* Collection group headings */
+    /* Category section headings */
     #nc-root nav h2,
     #nc-root nav h3,
     #nc-root nav [class*="Heading"],
     #nc-root nav [class*="heading"] {
       color: #8a7a5e !important;
-      font-size: 0.7rem !important;
-      font-weight: 700 !important;
+      font-size: 0.64rem !important;
+      font-weight: 800 !important;
       text-transform: uppercase !important;
-      letter-spacing: 1.2px !important;
-      padding: 16px 16px 4px !important;
+      letter-spacing: 1.6px !important;
+      padding: 18px 16px 6px !important;
+      border-top: 1px solid rgba(201,168,76,0.15) !important;
+      margin-top: 6px !important;
     }
 
     /* Nav links */
     #nc-root nav a {
-      color: #1B2E4B !important;
-      border-radius: 6px !important;
-      margin: 2px 8px !important;
-      padding: 8px 12px !important;
+      color: #2c3e50 !important;
+      border-radius: 7px !important;
+      margin: 1px 10px !important;
+      padding: 9px 14px !important;
       font-weight: 500 !important;
-      transition: background 0.15s ease !important;
+      font-size: 0.9rem !important;
+      display: flex !important;
+      align-items: center !important;
+      transition: all 0.15s ease !important;
     }
 
     #nc-root nav a:hover {
-      background: rgba(201,168,76,0.15) !important;
+      background: rgba(201,168,76,0.13) !important;
       color: #1B2E4B !important;
     }
 
@@ -152,15 +218,16 @@
     #nc-root nav a[class*="active"],
     #nc-root nav [class*="active"] > a,
     #nc-root nav li[class*="active"] a {
-      background: rgba(27,46,75,0.08) !important;
+      background: rgba(27,46,75,0.09) !important;
       color: #1B2E4B !important;
       font-weight: 700 !important;
-      border-right: 3px solid #C9A84C !important;
-      border-radius: 0 6px 6px 0 !important;
+      border-inline-end: 3px solid #C9A84C !important;
+      border-radius: 7px 0 0 7px !important;
+      margin-inline-end: 0 !important;
     }
 
     /* ══════════════════════════════════════════
-       Main content area
+       אזור תוכן ראשי  (שמאל)
     ══════════════════════════════════════════ */
     #nc-root main,
     #nc-root [class*="MainView"],
@@ -169,9 +236,23 @@
       background: #f5f1ea !important;
     }
 
-    /* ══════════════════════════════════════════
-       Entry cards / collection list
-    ══════════════════════════════════════════ */
+    /* Collection page header */
+    #nc-root [class*="CollectionHeader"],
+    #nc-root [class*="collectionHeader"] {
+      background: #fff !important;
+      border-bottom: 2px solid rgba(201,168,76,0.3) !important;
+      padding: 20px 28px !important;
+      direction: rtl !important;
+    }
+
+    #nc-root [class*="CollectionHeader"] h1,
+    #nc-root [class*="CollectionHeader"] h2 {
+      color: #1B2E4B !important;
+      font-size: 1.5rem !important;
+      font-weight: 800 !important;
+    }
+
+    /* Entry cards */
     #nc-root [class*="EntryCard"],
     #nc-root [class*="Card"],
     #nc-root [class*="card"] {
@@ -200,7 +281,6 @@
       direction: rtl !important;
     }
 
-    /* Publish / Save button */
     #nc-root [class*="Toolbar"] button[class*="success"],
     #nc-root [class*="Toolbar"] button[class*="Publish"],
     #nc-root [class*="publish"] {
@@ -350,11 +430,16 @@
       const logo = document.createElement('div');
       logo.id = 'cms-logo';
       logo.setAttribute('aria-label', 'נתיבותיה שלום — ניהול');
-      logo.textContent = 'נתיבותיה שלום';
+      logo.innerHTML =
+        '<span class="cms-logo-icon">✦</span>' +
+        '<div class="cms-logo-text">' +
+          '<span class="cms-logo-title">נתיבותיה שלום</span>' +
+          '<span class="cms-logo-subtitle">ממשק ניהול</span>' +
+        '</div>';
       header.prepend(logo);
     }
 
-    /* ─── Fix layout: sidebar + main as two separate columns ─── */
+    /* ─── Two-column layout: header / (nav | main) ─── */
     function fixLayout() {
       const rootDiv = document.querySelector('#nc-root > div');
       if (!rootDiv) return;
@@ -362,32 +447,42 @@
       const nav = rootDiv.querySelector('nav');
       if (!nav) return;
 
-      // The container that holds nav + main content
-      const bodyContainer = nav.parentElement;
-      if (!bodyContainer) return;
+      // App wrapper: full-viewport flex column
+      Object.assign(rootDiv.style, {
+        display:       'flex',
+        flexDirection: 'column',
+        height:        '100vh',
+        overflow:      'hidden',
+      });
 
-      // Force body container to flex-row
+      // Header: natural height, don't grow
+      const header = rootDiv.querySelector('header');
+      if (header) header.style.flexShrink = '0';
+
+      // Body row (nav + main): fills remaining height
+      const bodyContainer = nav.parentElement;
+      if (!bodyContainer || bodyContainer === rootDiv) return;
+
       Object.assign(bodyContainer.style, {
         display:       'flex',
         flexDirection: 'row',
         flex:          '1 1 auto',
         minHeight:     '0',
         overflow:      'hidden',
-        height:        '100%',
       });
 
-      // Sidebar — fixed width, no overlap
+      // Sidebar (ימין) — fixed width
       Object.assign(nav.style, {
         position:   'relative',
         flexShrink: '0',
-        width:      '240px',
-        minWidth:   '240px',
+        width:      '280px',
+        minWidth:   '280px',
         height:     '100%',
         overflowY:  'auto',
         overflowX:  'hidden',
       });
 
-      // Main content siblings — fill remaining space
+      // Main content (שמאל) — fills remaining width
       Array.from(bodyContainer.children).forEach(el => {
         if (el === nav) return;
         Object.assign(el.style, {
